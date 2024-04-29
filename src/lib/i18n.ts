@@ -59,15 +59,12 @@ const resources = {
       },
       schoolTypes: {
         ...schoolTypeObject,
-        /*public: 'Public',
-        private: 'Private',
-        grammar: 'Grammar'*/
       },
       school: {
         details: 'View Details',
         compare: 'Compare',
-        about: 'About the School',
         examResults: 'Exam Results',
+        about: 'About the School',
         facilities: 'Facilities',
         reviews: 'Reviews',
         noReviews: 'No reviews yet',
