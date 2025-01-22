@@ -15,13 +15,17 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export function NavBar() {
   const { t } = useTranslation();
-  const [location] = useLocation();
+  const [location, setLocation] = useLocation();
 
   const isActive = (path: string) => {
     if (path === "/") {
       return location === "/";
     }
     return location.startsWith(path);
+  };
+
+  const handleNavigate = (path: string) => {
+    setLocation(path);
   };
 
   return (
@@ -37,48 +41,46 @@ export function NavBar() {
               </SheetTrigger>
               <SheetContent side="left" className="w-64">
                 <div className="flex flex-col gap-4 py-4">
-                  <Link href="/match">
-                    <Button 
-                      variant={isActive("/match") ? "secondary" : "ghost"} 
-                      className="w-full justify-start"
-                    >
-                      <Target className="mr-2 h-4 w-4" />
-                      {t('nav.match')}
-                    </Button>
-                  </Link>
-                  <Link href="/search">
-                    <Button 
-                      variant={isActive("/search") ? "secondary" : "ghost"} 
-                      className="w-full justify-start"
-                    >
-                      <Search className="mr-2 h-4 w-4" />
-                      {t('nav.search')}
-                    </Button>
-                  </Link>
-                  <Link href="/compare">
-                    <Button 
-                      variant={isActive("/compare") ? "secondary" : "ghost"} 
-                      className="w-full justify-start"
-                    >
-                      <BarChart2 className="mr-2 h-4 w-4" />
-                      {t('nav.compare')}
-                    </Button>
-                  </Link>
+                  <Button 
+                    onClick={() => handleNavigate("/match")}
+                    variant={isActive("/match") ? "secondary" : "ghost"} 
+                    className="w-full justify-start"
+                  >
+                    <Target className="mr-2 h-4 w-4" />
+                    {t('nav.match')}
+                  </Button>
+                  <Button 
+                    onClick={() => handleNavigate("/search")}
+                    variant={isActive("/search") ? "secondary" : "ghost"} 
+                    className="w-full justify-start"
+                  >
+                    <Search className="mr-2 h-4 w-4" />
+                    {t('nav.search')}
+                  </Button>
+                  <Button 
+                    onClick={() => handleNavigate("/compare")}
+                    variant={isActive("/compare") ? "secondary" : "ghost"} 
+                    className="w-full justify-start"
+                  >
+                    <BarChart2 className="mr-2 h-4 w-4" />
+                    {t('nav.compare')}
+                  </Button>
                 </div>
               </SheetContent>
             </Sheet>
 
-            <Link href="/">
-              <div className="flex items-center px-2 text-navy-900">
-                <School className="h-8 w-8 text-primary"/>
-                <span className={cn(
-                  "ml-2 text-xl font-semibold",
-                  isActive("/") && "text-primary"
-                )}>
-                  {t('nav.title')}
-                </span>
-              </div>
-            </Link>
+            <div 
+              onClick={() => handleNavigate("/")}
+              className="flex items-center px-2 text-navy-900 cursor-pointer"
+            >
+              <School className="h-8 w-8 text-primary"/>
+              <span className={cn(
+                "ml-2 text-xl font-semibold",
+                isActive("/") && "text-primary"
+              )}>
+                {t('nav.title')}
+              </span>
+            </div>
 
             <div className="hidden lg:flex lg:ml-6">
               <NavigationMenu>
@@ -94,17 +96,18 @@ export function NavBar() {
                     <NavigationMenuContent>
                       <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                         <li className="row-span-3">
-                          <Link href="/search">
-                            <div className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md">
-                              <School className="h-6 w-6" />
-                              <div className="mb-2 mt-4 text-lg font-medium">
-                                {t('nav.schools')}
-                              </div>
-                              <p className="text-sm leading-tight text-muted-foreground">
-                                {t('nav.schoolsDescription')}
-                              </p>
+                          <div 
+                            onClick={() => handleNavigate("/search")}
+                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md cursor-pointer"
+                          >
+                            <School className="h-6 w-6" />
+                            <div className="mb-2 mt-4 text-lg font-medium">
+                              {t('nav.schools')}
                             </div>
-                          </Link>
+                            <p className="text-sm leading-tight text-muted-foreground">
+                              {t('nav.schoolsDescription')}
+                            </p>
+                          </div>
                         </li>
                       </ul>
                     </NavigationMenuContent>
@@ -116,35 +119,32 @@ export function NavBar() {
 
           <div className="flex items-center space-x-4">
             <div className="hidden lg:flex lg:space-x-4">
-              <Link href="/match">
-                <Button 
-                  variant={isActive("/match") ? "secondary" : "ghost"} 
-                  className="flex items-center"
-                >
-                  <Target className="mr-2 h-4 w-4" />
-                  <span>{t('nav.match')}</span>
-                </Button>
-              </Link>
+              <Button 
+                onClick={() => handleNavigate("/match")}
+                variant={isActive("/match") ? "secondary" : "ghost"} 
+                className="flex items-center"
+              >
+                <Target className="mr-2 h-4 w-4" />
+                <span>{t('nav.match')}</span>
+              </Button>
 
-              <Link href="/search">
-                <Button 
-                  variant={isActive("/search") ? "secondary" : "ghost"} 
-                  className="flex items-center"
-                >
-                  <Search className="mr-2 h-4 w-4" />
-                  <span>{t('nav.search')}</span>
-                </Button>
-              </Link>
+              <Button 
+                onClick={() => handleNavigate("/search")}
+                variant={isActive("/search") ? "secondary" : "ghost"} 
+                className="flex items-center"
+              >
+                <Search className="mr-2 h-4 w-4" />
+                <span>{t('nav.search')}</span>
+              </Button>
 
-              <Link href="/compare">
-                <Button 
-                  variant={isActive("/compare") ? "secondary" : "ghost"} 
-                  className="flex items-center"
-                >
-                  <BarChart2 className="mr-2 h-4 w-4" />
-                  <span>{t('nav.compare')}</span>
-                </Button>
-              </Link>
+              <Button 
+                onClick={() => handleNavigate("/compare")}
+                variant={isActive("/compare") ? "secondary" : "ghost"} 
+                className="flex items-center"
+              >
+                <BarChart2 className="mr-2 h-4 w-4" />
+                <span>{t('nav.compare')}</span>
+              </Button>
             </div>
 
             <LanguageSelector />
