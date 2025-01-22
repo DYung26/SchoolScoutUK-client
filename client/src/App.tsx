@@ -4,8 +4,8 @@ import { queryClient } from "./lib/queryClient";
 import { Toaster } from "@/components/ui/toaster";
 import { Layout } from "@/components/Layout";
 import Home from "@/pages/Home";
-import SchoolProfile from "@/pages/SchoolProfile";
 import Compare from "@/pages/Compare";
+import SchoolProfile from "@/pages/SchoolProfile";
 import Match from "@/pages/Match";
 import NotFound from "@/pages/not-found";
 
@@ -14,7 +14,6 @@ function Router() {
     <Layout>
       <Switch>
         <Route path="/" component={Home} />
-        <Route path="/search" component={Home} />
         <Route path="/schools/:id" component={SchoolProfile} />
         <Route path="/compare" component={Compare} />
         <Route path="/match" component={Match} />
