@@ -19,29 +19,10 @@ export function NavBar() {
   const [location] = useLocation();
 
   const isActive = (path: string) => {
-    return location === path;
-  };
-
-  const ListItem = ({ className, title, href, children }: any) => {
-    return (
-      <li>
-        <NavigationMenuLink asChild>
-          <Link href={href}>
-            <a
-              className={cn(
-                "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-                className
-              )}
-            >
-              <div className="text-sm font-medium leading-none">{title}</div>
-              <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                {children}
-              </p>
-            </a>
-          </Link>
-        </NavigationMenuLink>
-      </li>
-    );
+    if (path === "/") {
+      return location === "/" || location === "/search";
+    }
+    return location.startsWith(path);
   };
 
   return (
@@ -60,7 +41,7 @@ export function NavBar() {
                   {/* Mobile Navigation Links */}
                   <Link href="/match">
                     <Button 
-                      variant={isActive("/match") ? "default" : "ghost"} 
+                      variant={isActive("/match") ? "secondary" : "ghost"} 
                       className="w-full justify-start"
                     >
                       <Target className="mr-2 h-4 w-4" />
@@ -69,7 +50,7 @@ export function NavBar() {
                   </Link>
                   <Link href="/search">
                     <Button 
-                      variant={isActive("/search") ? "default" : "ghost"} 
+                      variant={isActive("/search") ? "secondary" : "ghost"} 
                       className="w-full justify-start"
                     >
                       <Search className="mr-2 h-4 w-4" />
@@ -78,7 +59,7 @@ export function NavBar() {
                   </Link>
                   <Link href="/compare">
                     <Button 
-                      variant={isActive("/compare") ? "default" : "ghost"} 
+                      variant={isActive("/compare") ? "secondary" : "ghost"} 
                       className="w-full justify-start"
                     >
                       <BarChart2 className="mr-2 h-4 w-4" />
@@ -90,18 +71,15 @@ export function NavBar() {
             </Sheet>
 
             <Link href="/">
-              <Button 
-                variant="link" 
-                className={cn(
-                  "flex items-center px-2 text-navy-900",
-                  isActive("/") && "text-primary"
-                )}
-              >
+              <a className="flex items-center px-2 text-navy-900">
                 <School className="h-8 w-8 text-primary"/>
-                <span className="ml-2 text-xl font-semibold">
+                <span className={cn(
+                  "ml-2 text-xl font-semibold",
+                  isActive("/") && "text-primary"
+                )}>
                   {t('nav.title')}
                 </span>
-              </Button>
+              </a>
             </Link>
 
             <div className="hidden lg:flex lg:ml-6">
@@ -130,15 +108,6 @@ export function NavBar() {
                             </a>
                           </Link>
                         </li>
-                        <ListItem href="/search" title={t('nav.search')}>
-                          {t('nav.searchDescription')}
-                        </ListItem>
-                        <ListItem href="/match" title={t('nav.match')}>
-                          {t('nav.matchDescription')}
-                        </ListItem>
-                        <ListItem href="/compare" title={t('nav.compare')}>
-                          {t('nav.compareDescription')}
-                        </ListItem>
                       </ul>
                     </NavigationMenuContent>
                   </NavigationMenuItem>
@@ -151,7 +120,7 @@ export function NavBar() {
             <div className="hidden lg:flex lg:space-x-4">
               <Link href="/match">
                 <Button 
-                  variant={isActive("/match") ? "default" : "ghost"} 
+                  variant={isActive("/match") ? "secondary" : "ghost"} 
                   className="flex items-center"
                 >
                   <Target className="mr-2 h-4 w-4" />
@@ -161,7 +130,7 @@ export function NavBar() {
 
               <Link href="/search">
                 <Button 
-                  variant={isActive("/search") ? "default" : "ghost"} 
+                  variant={isActive("/search") ? "secondary" : "ghost"} 
                   className="flex items-center"
                 >
                   <Search className="mr-2 h-4 w-4" />
@@ -171,7 +140,7 @@ export function NavBar() {
 
               <Link href="/compare">
                 <Button 
-                  variant={isActive("/compare") ? "default" : "ghost"} 
+                  variant={isActive("/compare") ? "secondary" : "ghost"} 
                   className="flex items-center"
                 >
                   <BarChart2 className="mr-2 h-4 w-4" />
