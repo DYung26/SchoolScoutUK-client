@@ -9,10 +9,11 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import type { School as SchoolType } from "@/lib/types";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { formatCurrency, formatPercentage } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
+import { useToast } from "@/hooks/use-toast";
 
 interface Props {
   school: SchoolType;
@@ -21,13 +22,38 @@ interface Props {
 
 export function SchoolCard({ school, showActions = true }: Props) {
   const { t, i18n } = useTranslation();
+  const [location] = useLocation();
+  const { toast } = useToast();
+
+  const handleCompare = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const currentParams = new URLSearchParams(location.split('?')[1] || '');
+    const currentSchools = currentParams.get('schools')?.split(',').map(Number) || [];
+
+    if (currentSchools.includes(school.id)) {
+      toast({
+        description: "This school is already in comparison",
+      });
+      return;
+    }
+
+    if (currentSchools.length >= 3) {
+      toast({
+        description: t('compare.maxSchools'),
+      });
+      return;
+    }
+
+    const newSchools = [...currentSchools, school.id];
+    window.location.href = `/compare?schools=${newSchools.join(',')}`;
+  };
 
   return (
     <Card className="h-full">
       {school.imageUrl && (
         <AspectRatio ratio={16 / 9} className="bg-muted">
           <img
-            src={school.imageUrl.startsWith('http') ? school.imageUrl : `/assets/schools/${school.imageUrl}`}
+            src={school.imageUrl}
             alt={school.name}
             className="object-cover w-full h-full rounded-t-lg"
           />
@@ -82,10 +108,8 @@ export function SchoolCard({ school, showActions = true }: Props) {
                   {t('school.details')}
                 </Link>
               </Button>
-              <Button variant="outline" asChild className="flex-1">
-                <Link href={`/compare?schools=${school.id}`}>
-                  {t('school.compare')}
-                </Link>
+              <Button variant="outline" className="flex-1" onClick={handleCompare}>
+                {t('school.compare')}
               </Button>
             </div>
           )}
