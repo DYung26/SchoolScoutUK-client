@@ -15,7 +15,6 @@ import {
   PolarRadiusAxis,
   Radar,
 } from "recharts";
-import { FilterPanel, type FilterOptions } from "@/components/FilterPanel";
 import {
   Table,
   TableBody,
@@ -45,17 +44,14 @@ import { formatCurrency, formatPercentage } from "@/lib/utils";
 import type { School } from "@/lib/types";
 import { useTranslation } from "react-i18next";
 import { X } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
 
 export default function Compare() {
   const [location, setLocation] = useLocation();
   const [selectedSchools, setSelectedSchools] = useState<number[]>([]);
   const { t, i18n } = useTranslation();
-  const { toast } = useToast();
-  const [filterOptions, setFilterOptions] = useState<FilterOptions>({});
 
   const { data: allSchools = [], isError: isAllSchoolsError } = useQuery<School[]>({
-    queryKey: ["/api/schools", filterOptions],
+    queryKey: ["/api/schools"],
     retry: false,
     staleTime: Infinity,
   });
@@ -109,10 +105,6 @@ export default function Compare() {
     );
   }
 
-  const handleFilter = (filters: FilterOptions) => {
-    setFilterOptions(filters);
-  };
-
   const academicData = schools?.map((school: School) => ({
     name: school.name,
     GCSE: school.examResults?.gcse.passRate || 0,
@@ -157,8 +149,6 @@ export default function Compare() {
             </div>
           </CardHeader>
           <CardContent>
-            <FilterPanel onFilter={handleFilter} />
-
             {!schools?.length ? (
               <div className="text-center py-8">
                 <p className="text-muted-foreground">
