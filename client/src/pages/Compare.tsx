@@ -29,29 +29,45 @@ import { Progress } from "@/components/ui/progress";
 import { formatCurrency, formatPercentage } from "@/lib/utils";
 import type { School } from "@/lib/types";
 import { useTranslation } from "react-i18next";
-import { Plus, X } from "lucide-react";
+import { X } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Compare() {
   const [location, setLocation] = useLocation();
   const [selectedSchools, setSelectedSchools] = useState<number[]>([]);
   const { t, i18n } = useTranslation();
+  const { toast } = useToast();
 
   // Fetch all schools for the selection dropdown
-  const { data: allSchools } = useQuery<School[]>({
+  const { data: allSchools, isError: isAllSchoolsError } = useQuery<School[]>({
     queryKey: ["/api/schools"],
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to load schools. Please try again later.",
+        variant: "destructive",
+      });
+    },
   });
 
   // Fetch detailed data for selected schools
-  const { data: schools } = useQuery<School[]>({
+  const { data: schools, isError: isCompareError } = useQuery<School[]>({
     queryKey: [`/api/schools/compare?ids=${selectedSchools.join(',')}`],
     enabled: selectedSchools.length > 0,
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to load comparison data. Please try again later.",
+        variant: "destructive",
+      });
+    },
   });
 
   useEffect(() => {
     const params = new URLSearchParams(location.split('?')[1]);
-    const schools = params.get('schools');
-    if (schools) {
-      setSelectedSchools(schools.split(',').map(Number));
+    const schoolIds = params.get('schools');
+    if (schoolIds) {
+      setSelectedSchools(schoolIds.split(',').map(Number));
     }
   }, [location]);
 
@@ -68,6 +84,27 @@ export default function Compare() {
     setSelectedSchools(newSelectedSchools);
     setLocation(newSelectedSchools.length ? `/compare?schools=${newSelectedSchools.join(',')}` : '/compare');
   };
+
+  // Error states
+  if (isAllSchoolsError || isCompareError) {
+    return (
+      <div className="min-h-screen bg-gray-50 py-8">
+        <div className="max-w-7xl mx-auto px-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>{t('compare.title')}</CardTitle>
+              <CardDescription>{t('compare.error')}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button onClick={() => window.location.reload()}>
+                {t('common.retry')}
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -202,7 +239,7 @@ export default function Compare() {
                       {schools.map(school => (
                         <TableCell key={school.id}>
                           <div className="space-y-1">
-                            {school.facilities.map(facility => (
+                            {school.facilities?.map(facility => (
                               <div key={facility} className="text-sm">
                                 • {facility}
                               </div>
@@ -216,7 +253,7 @@ export default function Compare() {
                       {schools.map(school => (
                         <TableCell key={school.id}>
                           <div className="space-y-1">
-                            {school.specialties.map(specialty => (
+                            {school.specialties?.map(specialty => (
                               <div key={specialty} className="text-sm">
                                 • {specialty}
                               </div>
