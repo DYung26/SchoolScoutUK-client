@@ -11,6 +11,14 @@ const resources = {
         match: 'Find Best Match',
         title: 'UK Schools Guide'
       },
+      compare: {
+        title: 'Compare Schools',
+        description: 'Compare up to three schools side by side to make an informed decision',
+        selectSchool: 'Select a school to compare',
+        maxSchools: 'You can compare up to 3 schools',
+        selectToCompare: 'Select schools to start comparing',
+        criteria: 'Criteria'
+      },
       home: {
         title: 'Find the Perfect School',
         subtitle: 'Compare UK schools and make an informed decision for your child\'s future',
@@ -48,7 +56,17 @@ const resources = {
         facilities: 'Facilities',
         reviews: 'Reviews',
         noReviews: 'No reviews yet',
-        ages: 'Ages {{min}}-{{max}}'
+        ages: 'Ages {{min}}-{{max}}',
+        type: 'School Type',
+        location: 'Location',
+        ageRange: 'Age Range',
+        gcseResults: 'GCSE Results',
+        aLevelResults: 'A-Level Results',
+        specialties: 'Specialties',
+        annualFees: 'Annual Fees',
+        noResults: 'No results available',
+        noFees: 'No fees information',
+        annualFee: 'Annual Fee'
       },
       common: {
         previous: 'Previous',
@@ -78,6 +96,14 @@ const resources = {
         compare: '比较',
         match: '最佳匹配',
         title: '英国学校指南'
+      },
+      compare: {
+        title: '学校比较',
+        description: '并排比较最多三所学校，做出明智的决定',
+        selectSchool: '选择要比较的学校',
+        maxSchools: '您最多可以比较3所学校',
+        selectToCompare: '选择学校开始比较',
+        criteria: '比较项目'
       },
       home: {
         title: '找到理想的学校',
@@ -116,7 +142,17 @@ const resources = {
         facilities: '设施',
         reviews: '评价',
         noReviews: '暂无评价',
-        ages: '年龄 {{min}}-{{max}}'
+        ages: '年龄 {{min}}-{{max}}',
+        type: '学校类型',
+        location: '位置',
+        ageRange: '年龄范围',
+        gcseResults: 'GCSE成绩',
+        aLevelResults: 'A-Level成绩',
+        specialties: '特色项目',
+        annualFees: '年费',
+        noResults: '暂无成绩信息',
+        noFees: '暂无费用信息',
+        annualFee: '年费'
       },
       common: {
         previous: '上一步',
@@ -204,6 +240,14 @@ const resources = {
         writeReview: 'اكتب تقييماً',
         noReviews: 'لا توجد تقييمات بعد',
         anonymous: 'مجهول'
+      },
+      compare: {
+        title: 'مقارنة المدارس',
+        description: 'قارن ما يصل إلى ثلاث مدارس جنبًا إلى جنب لاتخاذ قرار مستنير',
+        selectSchool: 'حدد مدرسة للمقارنة',
+        maxSchools: 'يمكنك مقارنة ما يصل إلى 3 مدارس',
+        selectToCompare: 'حدد المدارس لبدء المقارنة',
+        criteria: 'المعايير'
       }
     }
   }
