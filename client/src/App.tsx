@@ -6,6 +6,7 @@ import { NavBar } from "@/components/NavBar";
 import Home from "@/pages/Home";
 import SchoolProfile from "@/pages/SchoolProfile";
 import Compare from "@/pages/Compare";
+import Match from "@/pages/Match";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -16,6 +17,7 @@ function Router() {
         <Route path="/" component={Home} />
         <Route path="/schools/:id" component={SchoolProfile} />
         <Route path="/compare" component={Compare} />
+        <Route path="/match" component={Match} />
         <Route component={NotFound} />
       </Switch>
     </div>

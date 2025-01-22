@@ -2,7 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { db } from "@db";
 import { schools, reviews } from "@db/schema";
-import { eq, like, and, or } from "drizzle-orm";
+import { eq, like, and, or, desc, sql } from "drizzle-orm";
 
 export function registerRoutes(app: Express): Server {
   // Get all schools with optional filters
@@ -64,6 +64,85 @@ export function registerRoutes(app: Express): Server {
       res.json({ ...school, reviews: schoolReviews });
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch school" });
+    }
+  });
+
+  // Match schools based on preferences
+  app.get("/api/schools/match", async (req, res) => {
+    try {
+      const {
+        studentAge,
+        preferredType,
+        maxDistance,
+        focusAreas,
+        academicPriority,
+        facilitiesPriority,
+        maxAnnualFee,
+      } = req.query;
+
+      let query = db.select().from(schools);
+
+      // Filter by age range
+      query = query.where(
+        and(
+          sql`${schools.admissionAge}->>'min' <= ${studentAge}`,
+          sql`${schools.admissionAge}->>'max' >= ${studentAge}`
+        )
+      );
+
+      // Filter by school type if specified
+      if (preferredType && preferredType !== 'any') {
+        query = query.where(eq(schools.type, preferredType as string));
+      }
+
+      // Filter by maximum annual fee if specified
+      if (maxAnnualFee) {
+        query = query.where(
+          sql`${schools.fees}->>'annual' <= ${maxAnnualFee}`
+        );
+      }
+
+      // Calculate relevance score based on priorities
+      const results = await query;
+
+      const scoredResults = results.map(school => {
+        let score = 0;
+
+        // Academic score (based on exam results)
+        if (school.examResults) {
+          const academicScore = (
+            school.examResults.gcse.passRate +
+            school.examResults.aLevel.passRate
+          ) / 2;
+          score += (academicScore / 100) * Number(academicPriority);
+        }
+
+        // Facilities score
+        const facilitiesScore = (school.facilities?.length || 0) / 10; // Normalize to 0-1
+        score += facilitiesScore * Number(facilitiesPriority);
+
+        // Focus areas match
+        if (focusAreas && Array.isArray(focusAreas)) {
+          const matchingSpecialties = school.specialties.filter(s =>
+            focusAreas.includes(s)
+          ).length;
+          score += matchingSpecialties / focusAreas.length;
+        }
+
+        return {
+          ...school,
+          matchScore: score,
+        };
+      });
+
+      // Sort by match score and return top matches
+      const matches = scoredResults
+        .sort((a, b) => b.matchScore - a.matchScore)
+        .slice(0, 10);
+
+      res.json(matches);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to match schools" });
     }
   });
 
