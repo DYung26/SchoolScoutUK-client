@@ -7,7 +7,6 @@ import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
@@ -38,7 +37,6 @@ export function NavBar() {
               </SheetTrigger>
               <SheetContent side="left" className="w-64">
                 <div className="flex flex-col gap-4 py-4">
-                  {/* Mobile Navigation Links */}
                   <Link href="/match">
                     <Button 
                       variant={isActive("/match") ? "secondary" : "ghost"} 
@@ -119,39 +117,33 @@ export function NavBar() {
           <div className="flex items-center space-x-4">
             <div className="hidden lg:flex lg:space-x-4">
               <Link href="/match">
-                <a>
-                  <Button 
-                    variant={isActive("/match") ? "secondary" : "ghost"} 
-                    className="flex items-center"
-                  >
-                    <Target className="mr-2 h-4 w-4" />
-                    <span>{t('nav.match')}</span>
-                  </Button>
-                </a>
+                <Button 
+                  variant={isActive("/match") ? "secondary" : "ghost"} 
+                  className="flex items-center"
+                >
+                  <Target className="mr-2 h-4 w-4" />
+                  <span>{t('nav.match')}</span>
+                </Button>
               </Link>
 
               <Link href="/search">
-                <a>
-                  <Button 
-                    variant={isActive("/search") ? "secondary" : "ghost"} 
-                    className="flex items-center"
-                  >
-                    <Search className="mr-2 h-4 w-4" />
-                    <span>{t('nav.search')}</span>
-                  </Button>
-                </a>
+                <Button 
+                  variant={isActive("/search") ? "secondary" : "ghost"} 
+                  className="flex items-center"
+                >
+                  <Search className="mr-2 h-4 w-4" />
+                  <span>{t('nav.search')}</span>
+                </Button>
               </Link>
 
               <Link href="/compare">
-                <a>
-                  <Button 
-                    variant={isActive("/compare") ? "secondary" : "ghost"} 
-                    className="flex items-center"
-                  >
-                    <BarChart2 className="mr-2 h-4 w-4" />
-                    <span>{t('nav.compare')}</span>
-                  </Button>
-                </a>
+                <Button 
+                  variant={isActive("/compare") ? "secondary" : "ghost"} 
+                  className="flex items-center"
+                >
+                  <BarChart2 className="mr-2 h-4 w-4" />
+                  <span>{t('nav.compare')}</span>
+                </Button>
               </Link>
             </div>
 
