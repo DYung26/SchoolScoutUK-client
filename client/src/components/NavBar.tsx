@@ -20,10 +20,9 @@ export function NavBar() {
 
   const isActive = (path: string) => {
     if (path === "/") {
-      return location === "/" || location === "/search";
+      return location === "/";
     }
-    const normalizedPath = path.endsWith("/") ? path : path + "/";
-    return location.startsWith(path) || (path === "/schools" && location.startsWith("/schools/"));
+    return location.startsWith(path);
   };
 
   return (
@@ -120,33 +119,39 @@ export function NavBar() {
           <div className="flex items-center space-x-4">
             <div className="hidden lg:flex lg:space-x-4">
               <Link href="/match">
-                <Button 
-                  variant={isActive("/match") ? "secondary" : "ghost"} 
-                  className="flex items-center"
-                >
-                  <Target className="mr-2 h-4 w-4" />
-                  <span>{t('nav.match')}</span>
-                </Button>
+                <a>
+                  <Button 
+                    variant={isActive("/match") ? "secondary" : "ghost"} 
+                    className="flex items-center"
+                  >
+                    <Target className="mr-2 h-4 w-4" />
+                    <span>{t('nav.match')}</span>
+                  </Button>
+                </a>
               </Link>
 
               <Link href="/search">
-                <Button 
-                  variant={isActive("/search") ? "secondary" : "ghost"} 
-                  className="flex items-center"
-                >
-                  <Search className="mr-2 h-4 w-4" />
-                  <span>{t('nav.search')}</span>
-                </Button>
+                <a>
+                  <Button 
+                    variant={isActive("/search") ? "secondary" : "ghost"} 
+                    className="flex items-center"
+                  >
+                    <Search className="mr-2 h-4 w-4" />
+                    <span>{t('nav.search')}</span>
+                  </Button>
+                </a>
               </Link>
 
               <Link href="/compare">
-                <Button 
-                  variant={isActive("/compare") ? "secondary" : "ghost"} 
-                  className="flex items-center"
-                >
-                  <BarChart2 className="mr-2 h-4 w-4" />
-                  <span>{t('nav.compare')}</span>
-                </Button>
+                <a>
+                  <Button 
+                    variant={isActive("/compare") ? "secondary" : "ghost"} 
+                    className="flex items-center"
+                  >
+                    <BarChart2 className="mr-2 h-4 w-4" />
+                    <span>{t('nav.compare')}</span>
+                  </Button>
+                </a>
               </Link>
             </div>
 
