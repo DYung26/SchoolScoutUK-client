@@ -39,7 +39,7 @@ export function SchoolSelector({
             {schools.map((school) => {
               const isSelected = selectedSchools.includes(school.id);
               const canSelect = selectedSchools.length < maxSchools || isSelected;
-              
+
               return (
                 <Card 
                   key={school.id} 
@@ -59,8 +59,13 @@ export function SchoolSelector({
                         </p>
                         <div className="mt-2 text-sm">
                           <p>{t(`schoolTypes.${school.type}`)}</p>
-                          {school.faith && (
-                            <p className="text-muted-foreground">{school.faith}</p>
+                          {school.admissionAge && (
+                            <p className="text-muted-foreground">
+                              {t('school.ages', {
+                                min: school.admissionAge.min,
+                                max: school.admissionAge.max
+                              })}
+                            </p>
                           )}
                         </div>
                       </div>
