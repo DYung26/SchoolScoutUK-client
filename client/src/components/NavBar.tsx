@@ -22,7 +22,8 @@ export function NavBar() {
     if (path === "/") {
       return location === "/" || location === "/search";
     }
-    return location.startsWith(path);
+    const normalizedPath = path.endsWith("/") ? path : path + "/";
+    return location.startsWith(normalizedPath);
   };
 
   return (
@@ -70,7 +71,8 @@ export function NavBar() {
               </SheetContent>
             </Sheet>
 
-            <Link href="/" className="flex items-center px-2 text-navy-900">
+            <Link href="/">
+              <a className="flex items-center px-2 text-navy-900">
                 <School className="h-8 w-8 text-primary"/>
                 <span className={cn(
                   "ml-2 text-xl font-semibold",
@@ -78,6 +80,7 @@ export function NavBar() {
                 )}>
                   {t('nav.title')}
                 </span>
+              </a>
             </Link>
 
             <div className="hidden lg:flex lg:ml-6">
@@ -94,7 +97,8 @@ export function NavBar() {
                     <NavigationMenuContent>
                       <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                         <li className="row-span-3">
-                          <Link href="/search" className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md">
+                          <Link href="/search">
+                            <a className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md">
                               <School className="h-6 w-6" />
                               <div className="mb-2 mt-4 text-lg font-medium">
                                 {t('nav.schools')}
@@ -102,6 +106,7 @@ export function NavBar() {
                               <p className="text-sm leading-tight text-muted-foreground">
                                 {t('nav.schoolsDescription')}
                               </p>
+                            </a>
                           </Link>
                         </li>
                       </ul>
