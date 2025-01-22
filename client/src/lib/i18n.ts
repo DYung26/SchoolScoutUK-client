@@ -17,7 +17,17 @@ const resources = {
         selectSchool: 'Select a school to compare',
         maxSchools: 'You can compare up to 3 schools',
         selectToCompare: 'Select schools to start comparing',
-        criteria: 'Criteria'
+        criteria: 'Criteria',
+        filters: 'Advanced Filters',
+        maxDistance: 'Maximum Distance',
+        maxAnnualFees: 'Maximum Annual Fees',
+        minGcseScore: 'Minimum GCSE Score',
+        applyFilters: 'Apply Filters',
+        academicChart: 'Academic Performance',
+        facilitiesChart: 'Facilities Comparison',
+        demographicsChart: 'Student Demographics',
+        feeBreakdown: 'Fee Breakdown',
+        photoGallery: 'School Photos'
       },
       home: {
         title: 'Find the Perfect School',
@@ -103,7 +113,17 @@ const resources = {
         selectSchool: '选择要比较的学校',
         maxSchools: '您最多可以比较3所学校',
         selectToCompare: '选择学校开始比较',
-        criteria: '比较项目'
+        criteria: '比较项目',
+        filters: '高级筛选',
+        maxDistance: '最大距离',
+        maxAnnualFees: '最高年费',
+        minGcseScore: '最低GCSE分数',
+        applyFilters: '应用筛选',
+        academicChart: '学术表现',
+        facilitiesChart: '设施比较',
+        demographicsChart: '学生人口统计',
+        feeBreakdown: '费用明细',
+        photoGallery: '学校照片'
       },
       home: {
         title: '找到理想的学校',
@@ -247,7 +267,17 @@ const resources = {
         selectSchool: 'حدد مدرسة للمقارنة',
         maxSchools: 'يمكنك مقارنة ما يصل إلى 3 مدارس',
         selectToCompare: 'حدد المدارس لبدء المقارنة',
-        criteria: 'المعايير'
+        criteria: 'المعايير',
+        filters: 'تصفية متقدمة',
+        maxDistance: 'أقصى مسافة',
+        maxAnnualFees: 'الحد الأقصى للرسوم السنوية',
+        minGcseScore: 'الحد الأدنى لدرجات GCSE',
+        applyFilters: 'تطبيق التصفية',
+        academicChart: 'الأداء الأكاديمي',
+        facilitiesChart: 'مقارنة المرافق',
+        demographicsChart: 'التركيبة الطلابية',
+        feeBreakdown: 'تفصيل الرسوم',
+        photoGallery: 'صور المدرسة'
       }
     }
   }
