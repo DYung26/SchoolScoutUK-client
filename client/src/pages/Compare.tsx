@@ -54,27 +54,17 @@ export default function Compare() {
   const { toast } = useToast();
   const [filterOptions, setFilterOptions] = useState<FilterOptions>({});
 
-  const { data: allSchools, isError: isAllSchoolsError } = useQuery<School[]>({
+  const { data: allSchools = [], isError: isAllSchoolsError } = useQuery<School[]>({
     queryKey: ["/api/schools", filterOptions],
-    onError: () => {
-      toast({
-        title: "Error",
-        description: "Failed to load schools. Please try again later.",
-        variant: "destructive",
-      });
-    },
+    retry: false,
+    staleTime: Infinity,
   });
 
-  const { data: schools, isError: isCompareError } = useQuery<School[]>({
-    queryKey: [`/api/schools/compare?ids=${selectedSchools.join(',')}`],
+  const { data: schools = [], isError: isCompareError } = useQuery<School[]>({
+    queryKey: [`/api/schools/compare`, { ids: selectedSchools }],
     enabled: selectedSchools.length > 0,
-    onError: () => {
-      toast({
-        title: "Error",
-        description: "Failed to load comparison data. Please try again later.",
-        variant: "destructive",
-      });
-    },
+    retry: false,
+    staleTime: Infinity,
   });
 
   useEffect(() => {
@@ -123,17 +113,17 @@ export default function Compare() {
     setFilterOptions(filters);
   };
 
-  const academicData = schools?.map(school => ({
+  const academicData = schools?.map((school: School) => ({
     name: school.name,
     GCSE: school.examResults?.gcse.passRate || 0,
     'A-Level': school.examResults?.aLevel.passRate || 0,
-  }));
+  })) || [];
 
-  const facilitiesData = schools?.map(school => ({
+  const facilitiesData = schools?.map((school: School) => ({
     name: school.name,
     facilitiesCount: school.facilities?.length || 0,
     specialtiesCount: school.specialties?.length || 0,
-  }));
+  })) || [];
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -153,8 +143,8 @@ export default function Compare() {
                 </SelectTrigger>
                 <SelectContent>
                   {allSchools
-                    ?.filter(school => !selectedSchools.includes(school.id))
-                    .map(school => (
+                    ?.filter((school: School) => !selectedSchools.includes(school.id))
+                    .map((school: School) => (
                       <SelectItem key={school.id} value={school.id.toString()}>
                         {school.name}
                       </SelectItem>
@@ -242,7 +232,7 @@ export default function Compare() {
                     <TableHeader>
                       <TableRow>
                         <TableHead>{t('compare.criteria')}</TableHead>
-                        {schools.map(school => (
+                        {schools.map((school: School) => (
                           <TableHead key={school.id} className="min-w-[250px]">
                             <div className="flex justify-between items-center">
                               <span>{school.name}</span>
@@ -261,7 +251,7 @@ export default function Compare() {
                     <TableBody>
                       <TableRow>
                         <TableCell className="font-medium">{t('school.type')}</TableCell>
-                        {schools.map(school => (
+                        {schools.map((school: School) => (
                           <TableCell key={school.id}>
                             {t(`schoolTypes.${school.type}`)}
                           </TableCell>
@@ -269,7 +259,7 @@ export default function Compare() {
                       </TableRow>
                       <TableRow>
                         <TableCell className="font-medium">{t('school.location')}</TableCell>
-                        {schools.map(school => (
+                        {schools.map((school: School) => (
                           <TableCell key={school.id}>
                             {school.city}
                           </TableCell>
@@ -277,7 +267,7 @@ export default function Compare() {
                       </TableRow>
                       <TableRow>
                         <TableCell className="font-medium">{t('school.ageRange')}</TableCell>
-                        {schools.map(school => (
+                        {schools.map((school: School) => (
                           <TableCell key={school.id}>
                             {t('school.ages', {
                               min: school.admissionAge.min,
@@ -288,7 +278,7 @@ export default function Compare() {
                       </TableRow>
                       <TableRow>
                         <TableCell className="font-medium">{t('school.gcseResults')}</TableCell>
-                        {schools.map(school => (
+                        {schools.map((school: School) => (
                           <TableCell key={school.id}>
                             {school.examResults ? (
                               <div className="space-y-2">
@@ -308,7 +298,7 @@ export default function Compare() {
                       </TableRow>
                       <TableRow>
                         <TableCell className="font-medium">{t('school.aLevelResults')}</TableCell>
-                        {schools.map(school => (
+                        {schools.map((school: School) => (
                           <TableCell key={school.id}>
                             {school.examResults ? (
                               <div className="space-y-2">
@@ -328,10 +318,10 @@ export default function Compare() {
                       </TableRow>
                       <TableRow>
                         <TableCell className="font-medium">{t('school.facilities')}</TableCell>
-                        {schools.map(school => (
+                        {schools.map((school: School) => (
                           <TableCell key={school.id}>
                             <div className="space-y-1">
-                              {school.facilities?.map(facility => (
+                              {school.facilities?.map((facility: string) => (
                                 <div key={facility} className="text-sm">
                                   • {facility}
                                 </div>
@@ -342,10 +332,10 @@ export default function Compare() {
                       </TableRow>
                       <TableRow>
                         <TableCell className="font-medium">{t('school.specialties')}</TableCell>
-                        {schools.map(school => (
+                        {schools.map((school: School) => (
                           <TableCell key={school.id}>
                             <div className="space-y-1">
-                              {school.specialties?.map(specialty => (
+                              {school.specialties?.map((specialty: string) => (
                                 <div key={specialty} className="text-sm">
                                   • {specialty}
                                 </div>
@@ -354,10 +344,10 @@ export default function Compare() {
                           </TableCell>
                         ))}
                       </TableRow>
-                      {schools.some(s => s.fees) && (
+                      {schools.some((s: School) => s.fees) && (
                         <TableRow>
                           <TableCell className="font-medium">{t('school.annualFees')}</TableCell>
-                          {schools.map(school => (
+                          {schools.map((school: School) => (
                             <TableCell key={school.id}>
                               {school.fees ? (
                                 formatCurrency(school.fees.annual, 'GBP', i18n.language)
