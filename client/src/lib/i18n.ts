@@ -54,6 +54,20 @@ const resources = {
         previous: 'Previous',
         next: 'Next',
         submit: 'Submit'
+      },
+      reviews: {
+        title: 'Reviews',
+        rating: 'Rating',
+        comment: 'Your Review',
+        name: 'Your Name',
+        submit: 'Submit Review',
+        submitting: 'Submitting...',
+        success: 'Review Submitted',
+        successMessage: 'Thank you for sharing your experience!',
+        error: 'Error',
+        writeReview: 'Write a Review',
+        noReviews: 'No reviews yet',
+        anonymous: 'Anonymous'
       }
     }
   },
@@ -108,6 +122,20 @@ const resources = {
         previous: '上一步',
         next: '下一步',
         submit: '提交'
+      },
+      reviews: {
+        title: '评价',
+        rating: '评分',
+        comment: '您的评价',
+        name: '您的姓名',
+        submit: '提交评价',
+        submitting: '提交中...',
+        success: '评价已提交',
+        successMessage: '感谢您分享您的体验！',
+        error: '错误',
+        writeReview: '写评价',
+        noReviews: '暂无评价',
+        anonymous: '匿名'
       }
     }
   },
@@ -162,6 +190,20 @@ const resources = {
         previous: 'السابق',
         next: 'التالي',
         submit: 'إرسال'
+      },
+      reviews: {
+        title: 'التقييمات',
+        rating: 'التقييم',
+        comment: 'تقييمك',
+        name: 'اسمك',
+        submit: 'إرسال التقييم',
+        submitting: 'جاري الإرسال...',
+        success: 'تم إرسال التقييم',
+        successMessage: 'شكراً لمشاركة تجربتك!',
+        error: 'خطأ',
+        writeReview: 'اكتب تقييماً',
+        noReviews: 'لا توجد تقييمات بعد',
+        anonymous: 'مجهول'
       }
     }
   }
