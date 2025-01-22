@@ -2,13 +2,33 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { db } from "@db";
 import { schools, reviews } from "@db/schema";
-import { eq, like, and, or, desc, sql } from "drizzle-orm";
+import { eq, like, and, or, desc, sql, inArray } from "drizzle-orm";
 import path from "path";
 import express from 'express';
 
 export function registerRoutes(app: Express): Server {
   // Serve static files from the public directory
   app.use('/assets', express.static(path.join(process.cwd(), 'public', 'assets')));
+
+  // Get schools for comparison
+  app.get("/api/schools/compare", async (req, res) => {
+    try {
+      const schoolIds = req.query.ids?.toString().split(',').map(Number);
+
+      if (!schoolIds || !schoolIds.length) {
+        return res.status(400).json({ error: "No school IDs provided" });
+      }
+
+      const results = await db
+        .select()
+        .from(schools)
+        .where(inArray(schools.id, schoolIds));
+
+      res.json(results);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch schools for comparison" });
+    }
+  });
 
   // Get all schools with optional filters
   app.get("/api/schools", async (req, res) => {
