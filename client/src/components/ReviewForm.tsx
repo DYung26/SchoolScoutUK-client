@@ -149,7 +149,7 @@ export function ReviewForm({ schoolId, onSuccess }: Props) {
         />
 
         <Button type="submit" disabled={isPending}>
-          {isPending ? t("common.submitting") : t("reviews.submit")}
+          {isPending ? t("reviews.submitting") : t("reviews.submit")}
         </Button>
       </form>
     </Form>

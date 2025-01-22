@@ -11,6 +11,8 @@ import { Button } from "@/components/ui/button";
 import type { School as SchoolType } from "@/lib/types";
 import { Link } from "wouter";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { formatCurrency, formatPercentage } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   school: SchoolType;
@@ -18,6 +20,8 @@ interface Props {
 }
 
 export function SchoolCard({ school, showActions = true }: Props) {
+  const { i18n } = useTranslation();
+
   return (
     <Card className="h-full">
       {school.imageUrl && (
@@ -55,11 +59,17 @@ export function SchoolCard({ school, showActions = true }: Props) {
           {school.examResults && (
             <div className="grid grid-cols-2 gap-2 text-sm">
               <div>
-                GCSE Pass Rate: {school.examResults.gcse.passRate}%
+                GCSE Pass Rate: {formatPercentage(school.examResults.gcse.passRate, i18n.language)}
               </div>
               <div>
-                A-Level Pass Rate: {school.examResults.aLevel.passRate}%
+                A-Level Pass Rate: {formatPercentage(school.examResults.aLevel.passRate, i18n.language)}
               </div>
+            </div>
+          )}
+
+          {school.fees && (
+            <div className="text-sm text-muted-foreground">
+              Annual Fee: {formatCurrency(school.fees.annual, 'GBP', i18n.language)}
             </div>
           )}
 
