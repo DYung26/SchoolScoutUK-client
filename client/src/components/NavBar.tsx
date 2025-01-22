@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { School, Search, BarChart2 } from "lucide-react";
+import { School, Search, BarChart2, Target } from "lucide-react";
 import { useTranslation } from 'react-i18next';
 import { LanguageSelector } from "./LanguageSelector";
 
@@ -23,6 +23,15 @@ export function NavBar() {
           </div>
 
           <div className="flex items-center space-x-4">
+            <Button variant="ghost" asChild>
+              <Link href="/match">
+                <a className="flex items-center">
+                  <Target className="mr-2 h-4 w-4" />
+                  {t('nav.match')}
+                </a>
+              </Link>
+            </Button>
+
             <Button variant="ghost" asChild>
               <Link href="/search">
                 <a className="flex items-center">
