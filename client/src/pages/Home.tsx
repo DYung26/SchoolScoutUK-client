@@ -3,8 +3,10 @@ import { SchoolCard } from "@/components/SchoolCard";
 import { useQuery } from "@tanstack/react-query";
 import type { School, SearchFilters as Filters } from "@/lib/types";
 import { School as SchoolIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export default function Home() {
+  const { t } = useTranslation();
   const { data: schools, isLoading } = useQuery<School[]>({
     queryKey: ["/api/schools"],
   });
@@ -15,7 +17,7 @@ export default function Home() {
     Object.entries(filters).forEach(([key, value]) => {
       if (value) params.append(key, value.toString());
     });
-    
+
     // Re-fetch with new filters
     window.location.search = params.toString();
   };
@@ -27,10 +29,10 @@ export default function Home() {
           <div className="text-center">
             <SchoolIcon className="mx-auto h-12 w-12 mb-4" />
             <h1 className="text-4xl font-bold">
-              Find the Perfect School
+              {t('home.title')}
             </h1>
             <p className="mt-3 text-lg">
-              Compare UK schools and make an informed decision for your child's future
+              {t('home.subtitle')}
             </p>
           </div>
         </div>
@@ -38,7 +40,7 @@ export default function Home() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <SearchFilters onFilter={handleFilter} />
-        
+
         {isLoading ? (
           <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[...Array(6)].map((_, i) => (

@@ -22,13 +22,12 @@ interface Props {
 
 export function SchoolCard({ school, showActions = true }: Props) {
   const { t, i18n } = useTranslation();
-  const [location] = useLocation();
+  const [_, setLocation] = useLocation();
   const { toast } = useToast();
 
-  const handleCompare = (e: React.MouseEvent) => {
-    e.preventDefault();
-    const currentParams = new URLSearchParams(location.split('?')[1] || '');
-    const currentSchools = currentParams.get('schools')?.split(',').map(Number) || [];
+  const handleCompare = () => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const currentSchools = searchParams.get('schools')?.split(',').map(Number) || [];
 
     if (currentSchools.includes(school.id)) {
       toast({
@@ -45,7 +44,7 @@ export function SchoolCard({ school, showActions = true }: Props) {
     }
 
     const newSchools = [...currentSchools, school.id];
-    window.location.href = `/compare?schools=${newSchools.join(',')}`;
+    setLocation(`/compare?schools=${newSchools.join(',')}`);
   };
 
   return (
@@ -103,11 +102,11 @@ export function SchoolCard({ school, showActions = true }: Props) {
 
           {showActions && (
             <div className="flex space-x-2 mt-4">
-              <Button asChild className="flex-1">
-                <Link href={`/schools/${school.id}`}>
+              <Link href={`/schools/${school.id}`}>
+                <Button className="flex-1">
                   {t('school.details')}
-                </Link>
-              </Button>
+                </Button>
+              </Link>
               <Button variant="outline" className="flex-1" onClick={handleCompare}>
                 {t('school.compare')}
               </Button>
