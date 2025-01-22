@@ -22,7 +22,7 @@ interface Props {
 
 export function SchoolCard({ school, showActions = true }: Props) {
   const { t, i18n } = useTranslation();
-  const [_, setLocation] = useLocation();
+  const [_, navigate] = useLocation();
   const { toast } = useToast();
 
   const handleCompare = () => {
@@ -44,7 +44,7 @@ export function SchoolCard({ school, showActions = true }: Props) {
     }
 
     const newSchools = [...currentSchools, school.id];
-    setLocation(`/compare?schools=${newSchools.join(',')}`);
+    navigate(`/compare?schools=${newSchools.join(',')}`);
   };
 
   return (
@@ -103,9 +103,11 @@ export function SchoolCard({ school, showActions = true }: Props) {
           {showActions && (
             <div className="flex space-x-2 mt-4">
               <Link href={`/schools/${school.id}`}>
-                <Button className="flex-1">
-                  {t('school.details')}
-                </Button>
+                <a className="flex-1">
+                  <Button className="w-full">
+                    {t('school.details')}
+                  </Button>
+                </a>
               </Link>
               <Button variant="outline" className="flex-1" onClick={handleCompare}>
                 {t('school.compare')}

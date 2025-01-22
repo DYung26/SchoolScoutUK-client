@@ -13,35 +13,41 @@ export function NavBar() {
         <div className="flex justify-between h-16">
           <div className="flex">
             <Link href="/">
-              <div className="flex items-center px-2 text-navy-900 cursor-pointer">
+              <a className="flex items-center px-2 text-navy-900 cursor-pointer">
                 <School className="h-8 w-8 text-primary"/>
                 <span className="ml-2 text-xl font-semibold">
                   {t('nav.title')}
                 </span>
-              </div>
+              </a>
             </Link>
           </div>
 
           <div className="flex items-center space-x-4">
             <Link href="/match">
-              <Button variant="ghost" className="flex items-center">
-                <Target className="mr-2 h-4 w-4" />
-                {t('nav.match')}
-              </Button>
+              <a>
+                <Button variant="ghost" className="flex items-center">
+                  <Target className="mr-2 h-4 w-4" />
+                  {t('nav.match')}
+                </Button>
+              </a>
             </Link>
 
             <Link href="/search">
-              <Button variant="ghost" className="flex items-center">
-                <Search className="mr-2 h-4 w-4" />
-                {t('nav.search')}
-              </Button>
+              <a>
+                <Button variant="ghost" className="flex items-center">
+                  <Search className="mr-2 h-4 w-4" />
+                  {t('nav.search')}
+                </Button>
+              </a>
             </Link>
 
             <Link href="/compare">
-              <Button variant="ghost" className="flex items-center">
-                <BarChart2 className="mr-2 h-4 w-4" />
-                {t('nav.compare')}
-              </Button>
+              <a>
+                <Button variant="ghost" className="flex items-center">
+                  <BarChart2 className="mr-2 h-4 w-4" />
+                  {t('nav.compare')}
+                </Button>
+              </a>
             </Link>
 
             <LanguageSelector />
