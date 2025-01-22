@@ -103,13 +103,17 @@ export function SchoolCard({ school, showActions = true }: Props) {
           {showActions && (
             <div className="flex space-x-2 mt-4">
               <Link href={`/schools/${school.id}`}>
-                <a className="flex-1">
+                <div className="flex-1 cursor-pointer">
                   <Button className="w-full">
                     {t('school.details')}
                   </Button>
-                </a>
+                </div>
               </Link>
-              <Button variant="outline" className="flex-1" onClick={handleCompare}>
+              <Button 
+                variant="outline" 
+                className="flex-1" 
+                onClick={handleCompare}
+              >
                 {t('school.compare')}
               </Button>
             </div>

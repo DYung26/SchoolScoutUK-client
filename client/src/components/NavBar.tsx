@@ -24,24 +24,30 @@ export function NavBar() {
 
           <div className="flex items-center space-x-4">
             <Link href="/match">
-              <Button variant="ghost" className="flex items-center">
-                <Target className="mr-2 h-4 w-4" />
-                <span>{t('nav.match')}</span>
-              </Button>
+              <div className="cursor-pointer">
+                <Button variant="ghost" className="flex items-center">
+                  <Target className="mr-2 h-4 w-4" />
+                  <span>{t('nav.match')}</span>
+                </Button>
+              </div>
             </Link>
 
             <Link href="/search">
-              <Button variant="ghost" className="flex items-center">
-                <Search className="mr-2 h-4 w-4" />
-                <span>{t('nav.search')}</span>
-              </Button>
+              <div className="cursor-pointer">
+                <Button variant="ghost" className="flex items-center">
+                  <Search className="mr-2 h-4 w-4" />
+                  <span>{t('nav.search')}</span>
+                </Button>
+              </div>
             </Link>
 
             <Link href="/compare">
-              <Button variant="ghost" className="flex items-center">
-                <BarChart2 className="mr-2 h-4 w-4" />
-                <span>{t('nav.compare')}</span>
-              </Button>
+              <div className="cursor-pointer">
+                <Button variant="ghost" className="flex items-center">
+                  <BarChart2 className="mr-2 h-4 w-4" />
+                  <span>{t('nav.compare')}</span>
+                </Button>
+              </div>
             </Link>
 
             <LanguageSelector />
