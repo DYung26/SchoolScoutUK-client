@@ -13,41 +13,35 @@ export function NavBar() {
         <div className="flex justify-between h-16">
           <div className="flex">
             <Link href="/">
-              <a className="flex items-center px-2 text-navy-900 cursor-pointer">
+              <Button variant="link" className="flex items-center px-2 text-navy-900">
                 <School className="h-8 w-8 text-primary"/>
                 <span className="ml-2 text-xl font-semibold">
                   {t('nav.title')}
                 </span>
-              </a>
+              </Button>
             </Link>
           </div>
 
           <div className="flex items-center space-x-4">
             <Link href="/match">
-              <a>
-                <Button variant="ghost" className="flex items-center">
-                  <Target className="mr-2 h-4 w-4" />
-                  {t('nav.match')}
-                </Button>
-              </a>
+              <Button variant="ghost" className="flex items-center">
+                <Target className="mr-2 h-4 w-4" />
+                <span>{t('nav.match')}</span>
+              </Button>
             </Link>
 
             <Link href="/search">
-              <a>
-                <Button variant="ghost" className="flex items-center">
-                  <Search className="mr-2 h-4 w-4" />
-                  {t('nav.search')}
-                </Button>
-              </a>
+              <Button variant="ghost" className="flex items-center">
+                <Search className="mr-2 h-4 w-4" />
+                <span>{t('nav.search')}</span>
+              </Button>
             </Link>
 
             <Link href="/compare">
-              <a>
-                <Button variant="ghost" className="flex items-center">
-                  <BarChart2 className="mr-2 h-4 w-4" />
-                  {t('nav.compare')}
-                </Button>
-              </a>
+              <Button variant="ghost" className="flex items-center">
+                <BarChart2 className="mr-2 h-4 w-4" />
+                <span>{t('nav.compare')}</span>
+              </Button>
             </Link>
 
             <LanguageSelector />

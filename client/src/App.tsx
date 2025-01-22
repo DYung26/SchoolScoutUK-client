@@ -11,16 +11,17 @@ import NotFound from "@/pages/not-found";
 
 function Router() {
   return (
-    <div className="min-h-screen">
+    <>
       <NavBar />
       <Switch>
         <Route path="/" component={Home} />
+        <Route path="/search" component={Home} />
         <Route path="/schools/:id" component={SchoolProfile} />
         <Route path="/compare" component={Compare} />
         <Route path="/match" component={Match} />
         <Route component={NotFound} />
       </Switch>
-    </div>
+    </>
   );
 }
 
