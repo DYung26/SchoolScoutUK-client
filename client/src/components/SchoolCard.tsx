@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import type { School as SchoolType } from "@/lib/types";
 import { Link } from "wouter";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 interface Props {
   school: SchoolType;
@@ -19,6 +20,15 @@ interface Props {
 export function SchoolCard({ school, showActions = true }: Props) {
   return (
     <Card className="h-full">
+      {school.imageUrl && (
+        <AspectRatio ratio={16 / 9} className="bg-muted">
+          <img
+            src={school.imageUrl.startsWith('http') ? school.imageUrl : `/assets/schools/${school.imageUrl}`}
+            alt={school.name}
+            className="object-cover w-full h-full rounded-t-lg"
+          />
+        </AspectRatio>
+      )}
       <CardHeader>
         <div className="flex justify-between items-start">
           <div>
@@ -41,7 +51,7 @@ export function SchoolCard({ school, showActions = true }: Props) {
               Ages {school.admissionAge.min}-{school.admissionAge.max}
             </span>
           </div>
-          
+
           {school.examResults && (
             <div className="grid grid-cols-2 gap-2 text-sm">
               <div>

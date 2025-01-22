@@ -3,8 +3,13 @@ import { createServer, type Server } from "http";
 import { db } from "@db";
 import { schools, reviews } from "@db/schema";
 import { eq, like, and, or, desc, sql } from "drizzle-orm";
+import path from "path";
+import express from 'express';
 
 export function registerRoutes(app: Express): Server {
+  // Serve static files from the public directory
+  app.use('/assets', express.static(path.join(process.cwd(), 'public', 'assets')));
+
   // Get all schools with optional filters
   app.get("/api/schools", async (req, res) => {
     try {
@@ -30,9 +35,7 @@ export function registerRoutes(app: Express): Server {
 
       if (minRating) {
         query = query.where(
-          and(
-            eq(schools.rating, Number(minRating))
-          )
+          sql`${schools.rating} >= ${minRating}`
         );
       }
 
