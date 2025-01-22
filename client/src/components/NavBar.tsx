@@ -23,7 +23,7 @@ export function NavBar() {
       return location === "/" || location === "/search";
     }
     const normalizedPath = path.endsWith("/") ? path : path + "/";
-    return location.startsWith(normalizedPath);
+    return location.startsWith(path) || (path === "/schools" && location.startsWith("/schools/"));
   };
 
   return (
@@ -89,7 +89,7 @@ export function NavBar() {
                   <NavigationMenuItem>
                     <NavigationMenuTrigger 
                       className={cn(
-                        isActive("/search") && "bg-accent text-accent-foreground"
+                        isActive("/schools") && "bg-accent text-accent-foreground"
                       )}
                     >
                       Schools
