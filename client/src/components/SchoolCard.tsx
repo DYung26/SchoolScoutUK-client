@@ -20,7 +20,7 @@ interface Props {
 }
 
 export function SchoolCard({ school, showActions = true }: Props) {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   return (
     <Card className="h-full">
@@ -43,7 +43,7 @@ export function SchoolCard({ school, showActions = true }: Props) {
             </CardDescription>
           </div>
           <Badge variant={school.type === 'private' ? 'default' : 'secondary'}>
-            {school.type}
+            {t(`schoolTypes.${school.type}`)}
           </Badge>
         </div>
       </CardHeader>
@@ -52,24 +52,26 @@ export function SchoolCard({ school, showActions = true }: Props) {
           <div className="flex items-center space-x-2">
             <GraduationCap className="h-4 w-4" />
             <span>
-              Ages {school.admissionAge.min}-{school.admissionAge.max}
+              {t('school.ages', { min: school.admissionAge.min, max: school.admissionAge.max })}
             </span>
           </div>
 
           {school.examResults && (
             <div className="grid grid-cols-2 gap-2 text-sm">
               <div>
-                GCSE Pass Rate: {formatPercentage(school.examResults.gcse.passRate, i18n.language)}
+                <span className="text-muted-foreground">GCSE: </span>
+                {formatPercentage(school.examResults.gcse.passRate, i18n.language)}
               </div>
               <div>
-                A-Level Pass Rate: {formatPercentage(school.examResults.aLevel.passRate, i18n.language)}
+                <span className="text-muted-foreground">A-Level: </span>
+                {formatPercentage(school.examResults.aLevel.passRate, i18n.language)}
               </div>
             </div>
           )}
 
           {school.fees && (
             <div className="text-sm text-muted-foreground">
-              Annual Fee: {formatCurrency(school.fees.annual, 'GBP', i18n.language)}
+              {t('school.annualFee')}: {formatCurrency(school.fees.annual, 'GBP', i18n.language)}
             </div>
           )}
 
@@ -77,12 +79,12 @@ export function SchoolCard({ school, showActions = true }: Props) {
             <div className="flex space-x-2 mt-4">
               <Button asChild className="flex-1">
                 <Link href={`/schools/${school.id}`}>
-                  View Details
+                  {t('school.details')}
                 </Link>
               </Button>
               <Button variant="outline" asChild className="flex-1">
                 <Link href={`/compare?schools=${school.id}`}>
-                  Compare
+                  {t('school.compare')}
                 </Link>
               </Button>
             </div>

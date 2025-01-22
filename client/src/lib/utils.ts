@@ -15,7 +15,7 @@ export function formatCurrency(amount: number, currency: string = 'GBP', locale:
 
 // Format date based on user's locale
 export function formatDate(date: string | Date, locale: string = 'en-GB') {
-  return new Intl.Intl.DateTimeFormat(locale, {
+  return new Intl.DateTimeFormat(locale, {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
