@@ -1,6 +1,9 @@
 import { drizzle } from "drizzle-orm/neon-serverless";
 import ws from "ws";
 import * as schema from "@db/schema";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 if (!process.env.DATABASE_URL) {
   throw new Error(
@@ -13,3 +16,5 @@ export const db = drizzle({
   schema,
   ws: ws,
 });
+
+export type Database = typeof db;
