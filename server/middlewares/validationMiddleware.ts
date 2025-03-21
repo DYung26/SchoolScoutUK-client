@@ -43,7 +43,7 @@ export const validateParams = (schema: ZodSchema) => {
  */
 export const validateBody = (schema: ZodSchema) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    const result = schema.safeParse(req.body.data);
+    const result = schema.safeParse(req.body);
 
     if (!result.success) {
       jsonResponse(res, StatusCodes.BAD_REQUEST, '', { error: result.error.format() });
