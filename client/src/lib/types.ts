@@ -1,3 +1,6 @@
+import { User } from "@db/schema";
+import { LoginDTO } from "server/dtos/user.dto";
+
 export type SchoolType = 'public' | 'private' | 'grammar';
 
 export interface School {
@@ -51,4 +54,10 @@ export interface SearchFilters {
   type?: SchoolType;
   city?: string;
   minRating?: number;
+}
+
+export interface AuthContextType {
+  user: User;
+  login: (userData: LoginDTO) => void;
+  logout: () => void;
 }
