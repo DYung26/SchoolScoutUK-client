@@ -1,5 +1,17 @@
-import { User } from "@db/schema";
 import { LoginDTO } from "server/dtos/user.dto";
+
+export interface User {
+  id?: number;
+  userId: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  username: string;
+  password: string;
+  isAdmin: boolean,
+  createdAt: number;
+  updatedAt: number;
+}
 
 export type SchoolType = 'public' | 'private' | 'grammar';
 
@@ -60,4 +72,5 @@ export interface AuthContextType {
   user: User;
   login: (userData: LoginDTO) => void;
   logout: () => void;
+  loading: boolean;
 }
