@@ -19,7 +19,7 @@ export default defineConfig({
     // port: 5173,
     open: true, // Opens browser on start
   },
-  root: path.resolve(__dirname),
+  // root: path.resolve(__dirname),
   build: {
     outDir: path.resolve(__dirname, "dist"),
     emptyOutDir: true,
