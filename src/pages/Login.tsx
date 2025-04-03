@@ -56,11 +56,11 @@ export default function Login() {
   };
 
   return (
-    <div className="grid grid-rows-[auto_1fr] min-h-screen">
+    <div className="grid grid-rows-[auto_1fr] h-screen">
       <AuthNavbar />
       <div className="grid grid-cols-1 md:grid-cols-2">
         <div className="flex items-center justify-center bg-gray-100">
-          <div className="flex flex-col w-full border p-8 m-48 rounded-3xl shadow-2xl drop-shadow-2xl bg-white">
+          <div className="flex flex-col w-full border p-8 m-20 rounded-3xl drop-shadow-2xl bg-white">
             <h2 className="text-center text-4xl font-black">Login</h2>
 
             <div>

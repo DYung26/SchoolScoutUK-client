@@ -59,10 +59,10 @@ export default function SignUp() {
     try {
       const { confirmPassword, ...dataToSend } = formData;
       const response = await signupMutation.mutateAsync(dataToSend);
-      toast({ title: "Success!", response });
+      toast({ title: "Success!", description: "Signed up successfully" });
     } catch (err: any) {
       console.error("Signup Error:", err);
-      toast({ title: "Error", response: err });
+      toast({ title: "Error", description: "" });
     }
   };
 
@@ -71,13 +71,13 @@ export default function SignUp() {
       <AuthNavbar />
       <div className="grid grid-cols-1 md:grid-cols-2">
         <div className="flex items-center justify-center bg-gray-100">
-          <div className="flex flex-col w-full border p-8 m-48 rounded-3xl shadow-2xl drop-shadow-2xl bg-white">
+          <div className="flex flex-col w-full border p-8 m-10 rounded-3xl shadow-2xl drop-shadow-2xl bg-white">
             <h2 className="text-center text-4xl font-black">Sign Up</h2>
             <h2 className="text-center text-2xl font-thin">Set up your account in minutes</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="firstName" className="w-full mt-2 text-blue-700">first name
+                <label htmlFor="firstName" className="w-full text-blue-700">first name
                 <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -91,7 +91,7 @@ export default function SignUp() {
               </div>
 
               <div>
-                <label htmlFor="lastName" className="w-full mt-2 text-blue-700">last name
+                <label htmlFor="lastName" className="w-full text-blue-700">last name
                 <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -106,7 +106,7 @@ export default function SignUp() {
             </div>
 
             <div>
-              <label htmlFor="username" className="w-full mt-2 text-blue-700">username
+              <label htmlFor="username" className="w-full text-blue-700">username
               <span className="text-red-500">*</span>
               </label>
               <input
@@ -120,7 +120,7 @@ export default function SignUp() {
             </div>
 
             <div>
-              <label htmlFor="email" className="w-full mt-2 text-blue-700">email
+              <label htmlFor="email" className="w-full text-blue-700">email
               <span className="text-red-500">*</span>
               </label>
               <input
@@ -134,7 +134,7 @@ export default function SignUp() {
             </div>
 
             <div className="relative">
-              <label htmlFor="password" className="w-full mt-2 text-blue-700">password
+              <label htmlFor="password" className="w-full text-blue-700">password
               <span className="text-red-500">*</span>
               </label>
               <input
@@ -155,7 +155,7 @@ export default function SignUp() {
             </div>
 
             <div className="relative">
-              <label htmlFor="confirmPassword" className="w-full mt-2 text-blue-700">confirm password
+              <label htmlFor="confirmPassword" className="w-full text-blue-700">confirm password
               <span className="text-red-500">*</span>
               </label>
               <input
@@ -176,7 +176,7 @@ export default function SignUp() {
               {error && <p className="text-red-500 text-base font-medium">{error}</p>}
             </div>
 
-            <button type="submit" disabled={signupMutation.isPending} onClick={handleRegister} className="w-full mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+            <button type="submit" disabled={signupMutation.isPending} onClick={handleRegister} className="w-full mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
               {signupMutation.isPending ? "Signing up..." : "Sign Up"}
             </button>
             {signupMutation.isPending && <LoadingSpinner />}
