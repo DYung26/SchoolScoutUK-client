@@ -20,7 +20,8 @@ export default function Onboarding() {
   const prevStep = () => setStep((prev) => Math.max(prev - 1, 0));
 
   return (
-    <div className="max-w-lg mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
+    <div className="max-w-lg p-6 bg-white shadow-lg rounded-lg absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-blue-700">
+    {/* flex items-center justify-center */}
       <h2 className="text-xl font-bold mb-4">{steps[step]}</h2>
 
       {step === 0 && (

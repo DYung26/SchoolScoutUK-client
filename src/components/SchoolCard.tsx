@@ -53,7 +53,7 @@ export function SchoolCard({ school, showActions = true }: Props) {
         <AspectRatio ratio={16 / 9} className="bg-muted">
           <img
             src={school.imageUrl}
-            alt={school.schoolName}
+            alt={school.name}
             className="object-cover w-full h-full rounded-t-lg"
           />
         </AspectRatio>
@@ -61,15 +61,15 @@ export function SchoolCard({ school, showActions = true }: Props) {
       <CardHeader>
         <div className="flex justify-between items-start">
           <div>
-            <CardTitle className="text-xl">{school.schoolName}</CardTitle>
+            <CardTitle className="text-xl">{school.name}</CardTitle>
             <CardDescription className="flex items-center mt-1">
               <MapPin className="h-4 w-4 mr-1" />
               {school.city}
             </CardDescription>
           </div>
-          <Badge variant={school.schoolType === 'private' ? 'default' : 'secondary'
+          <Badge variant={school.type === 'private' ? 'default' : 'secondary'
           }>
-            {t(`schoolTypes.${school.schoolType}`)}
+            {t(`schoolTypes.${school.type}`)}
           </Badge>
         </div>
       </CardHeader>
@@ -79,8 +79,7 @@ export function SchoolCard({ school, showActions = true }: Props) {
             <GraduationCap className="h-4 w-4" />
             <span>
               {t('school.ages', )}
-              {// (min: school.admissionAge.min, max: school.admissionAge.max)
-              }
+              (min: school.ageLow, max: school.ageHigh)
             </span>
           </div>
 

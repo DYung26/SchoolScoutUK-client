@@ -7,7 +7,7 @@ export default function AuthSideBanner() {
         </p>
         <p className="text-3xl text-left leading-relaxed font-bold">
           Discover top schools effortlessly with SchoolScoutUK.
-          Our smart search, detailed insights, and personalized recommendations help you make the best choice for your child's education. Start exploring today!"
+          Our smart search, detailed insights, and personalized recommendations help you make the best choice for your child's education. Start exploring today!
         </p>
         <a href="/signup" className="border bg-white text-blue-700 rounded px-4 py-2 font-bold text-3xl hover:!bg-blue-700 hover:text-white inline-block transition-all hover:drop-shadow-2xl">
           Get Started

@@ -15,11 +15,13 @@ export type SchoolType = 'public' | 'private' | 'grammar';
 
 export interface School {
   id: number;
-  schoolName: string;
+  name: string;
   address: string;
   city: string;
   postcode: string;
-  schoolType: string; // SchoolType;
+  type: string; // SchoolType;
+  ageLow: string;
+  ageHigh: string;
   admissionAge: {
     min: number;
     max: number;
