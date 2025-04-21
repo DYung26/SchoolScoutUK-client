@@ -36,7 +36,7 @@ export default function SignUp() {
     },
     onSuccess: (data) => {
       console.log("Sign up successful", data);
-      setLocation("/onboarding");
+      setLocation("/login"); // "/onboarding");
     },
     onError: (error) => {
       console.error("Signup failed:", error.message);
