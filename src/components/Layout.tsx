@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useEffect, useRef } from "react";
 import { useLocation } from "wouter";
 import { NavBar } from "./NavBar";
 import { Breadcrumb } from "./Breadcrumb";

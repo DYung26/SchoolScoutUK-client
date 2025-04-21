@@ -3,8 +3,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useTranslation } from "react-i18next";
-import { useQuery } from "@tanstack/react-query";
-import { School } from "@/lib/types";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { School, SchoolType, schoolTypeObject } from "@/lib/types";
 import { SchoolCard } from "@/components/SchoolCard";
 import {
   Form,
@@ -31,15 +31,18 @@ import {
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { Progress } from "@/components/ui/progress";
+import { mutationFn } from "@/lib/queryClient";
+import { toast } from "@/hooks/use-toastx";
+import { ThinkingAnimation } from "@/components/ThinkingAnimation";
 
 const matchingSchema = z.object({
   studentAge: z.number().min(3).max(18),
-  preferredType: z.enum(["public", "private", "grammar", "any"]),
-  maxDistance: z.number().min(1).max(50),
+  preferredType: z.enum(SchoolType),
+  /*maxDistance: z.number().min(1).max(50),
   focusAreas: z.array(z.string()).min(1),
   academicPriority: z.number().min(1).max(5),
   facilitiesPriority: z.number().min(1).max(5),
-  maxAnnualFee: z.number().optional(),
+  maxAnnualFee: z.number().optional(),*/
 });
 
 type MatchingFormData = z.infer<typeof matchingSchema>;
@@ -55,22 +58,38 @@ export default function Match() {
   const { t } = useTranslation();
   const [currentStep, setCurrentStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
+  const [matchedSchools, setMatchedSchools] = useState<
+    { school: School, score: number, aiComment: string }[] | []
+  >([]);
 
   const form = useForm<MatchingFormData>({
     resolver: zodResolver(matchingSchema),
     defaultValues: {
       studentAge: 11,
-      preferredType: "any",
+      /*preferredType: "",
       maxDistance: 20,
       focusAreas: [],
       academicPriority: 3,
-      facilitiesPriority: 3,
+      facilitiesPriority: 3,*/
     },
   });
-
-  const { data: matchedSchools, isLoading } = useQuery<School[]>({
-    queryKey: ["/api/schools/match", submitted ? form.getValues() : null],
-    enabled: submitted,
+  
+  const matchMutation = useMutation({
+    mutationFn: async () => {
+      return mutationFn({
+        url: "/api/schools/match",
+        method: "POST",
+        body: {},
+      });
+    },
+    onSuccess: (response) => {
+      const matchedSchools = response?.data?.schools;
+      console.log("alrai", matchedSchools);
+      setMatchedSchools(matchedSchools);
+    },
+    onError: (error) => {
+      console.error("Getting match failed:", error.message);
+    },
   });
 
   const nextStep = () => {
@@ -85,9 +104,15 @@ export default function Match() {
     }
   };
 
-  const onSubmit = (data: MatchingFormData) => {
+  const onSubmit = async (data: MatchingFormData) => {
     if (currentStep === steps.length - 1) {
       setSubmitted(true);
+      try {
+        await matchMutation.mutateAsync();
+        toast({ title: "Success!", description: "Schools matched successfully" });
+      } catch (err) {
+        toast({ title: "Error", description: "Failed to match schools. Please try again." });
+      }
     } else {
       nextStep();
     }
@@ -117,7 +142,12 @@ export default function Match() {
                           name="studentAge"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>{t("match.studentAge")}</FormLabel>
+                              <FormLabel>
+                                {t("match.studentAge")}: {" "}
+                                  <strong>
+                                    {field.value}
+                                  </strong>
+                                </FormLabel>
                               <FormControl>
                                 <Slider
                                   min={3}
@@ -148,15 +178,23 @@ export default function Match() {
                                 </FormControl>
                                 <SelectContent>
                                   <SelectItem value="any">{t("match.anyType")}</SelectItem>
-                                  <SelectItem value="public">{t("schoolTypes.public")}</SelectItem>
-                                  <SelectItem value="private">{t("schoolTypes.private")}</SelectItem>
-                                  <SelectItem value="grammar">{t("schoolTypes.grammar")}</SelectItem>
+                                  {SchoolType.map((type) => (
+                                    <SelectItem key={type} value={type}>
+                                      {t(`schoolTypes.${type}`)}
+                                    </SelectItem>
+                                  ))}
                                 </SelectContent>
                               </Select>
                               <FormMessage />
                             </FormItem>
                           )}
                         />
+                      </>
+                    )}
+
+                    {currentStep === 1 && (
+                      <>
+                        <div>TESTING</div>
                       </>
                     )}
 
@@ -182,8 +220,9 @@ export default function Match() {
               </>
             ) : (
               <div className="space-y-6">
-                {isLoading ? (
+                {matchMutation.isPending ? (
                   <div className="grid grid-cols-1 gap-4">
+                    <ThinkingAnimation />
                     {[...Array(3)].map((_, i) => (
                       <div
                         key={i}
@@ -197,8 +236,12 @@ export default function Match() {
                       {t("match.matchedSchools")}
                     </h3>
                     <div className="grid grid-cols-1 gap-4">
-                      {matchedSchools?.map((school) => (
-                        <SchoolCard key={school.id} school={school} />
+                      {matchedSchools.map(
+                        ({ school, score, aiComment }, index) => (
+                        <SchoolCard 
+                          key={school?.id ?? `school-${index}`}
+                          school={{...school, score, aiComment}}
+                        />
                       ))}
                     </div>
                   </>

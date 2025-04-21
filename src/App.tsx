@@ -24,12 +24,14 @@ function Router() {
       <Route path="/onboarding" component={Onboarding} />
       <Route path="/login" component={Login} />
       <Layout>
-        <ProtectedRoute path="/dashboard" component={Home} />
-        <ProtectedRoute path="/profile" component={ProfileNav} />
-        <Route path="/schools/:id" component={SchoolProfile} />
-        <ProtectedRoute path="/compare" component={Compare} />
-        <Route path="/match" component={Match} />
-        <Route component={NotFound} />
+        <Switch>
+          <ProtectedRoute path="/dashboard" component={Home} />
+          <ProtectedRoute path="/profile" component={ProfileNav} />
+          <Route path="/schools/:id" component={SchoolProfile} />
+          <ProtectedRoute path="/compare" component={Compare} />
+          <Route path="/match" component={Match} />
+          <Route component={NotFound} />
+        </Switch>
       </Layout>
     </Switch>
   );

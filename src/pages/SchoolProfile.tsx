@@ -34,9 +34,14 @@ import { useTranslation } from "react-i18next";
 export default function SchoolProfile() {
   const { t } = useTranslation();
   const { id } = useParams();
-  const { data, isLoading } = useQuery<{ reviews: Review[] } & School>({
+  console.log("Params:", useParams());
+  const { data, isLoading } = useQuery<{ data: { school: School } }>({
+    // { reviews: Review[] } & School
     queryKey: [`/api/schools/${id}`],
   });
+  console.log(data);
+  const school = data?.data?.school;
+  console.log(school);
 
   if (isLoading) {
     return (
@@ -48,18 +53,18 @@ export default function SchoolProfile() {
     );
   }
 
-  if (!data) return null;
+  if (!school) return null;
 
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="bg-primary text-white py-12">
         <div className="max-w-4xl mx-auto px-4">
-          <h1 className="text-4xl font-bold">{data.name}</h1>
+          <h1 className="text-4xl font-bold">{school.name}</h1>
           <div className="flex items-center mt-4 space-x-4">
-            <Badge variant="secondary">{data.type}</Badge>
+            <Badge variant="secondary">{school.type}</Badge>
             <div className="flex items-center">
               <MapPin className="h-4 w-4 mr-1" />
-              {data.address}, {data.city}
+              {school.address} {school.town}
             </div>
           </div>
         </div>
@@ -72,32 +77,32 @@ export default function SchoolProfile() {
               <CardTitle>{t("school.about")}</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-600">{data.description}</p>
+              <p className="text-gray-600">{school.description}</p>
 
               <div className="mt-6 space-y-4">
                 <div className="flex items-center space-x-2">
                   <GraduationCap className="h-5 w-5" />
-                  <span>{t("school.ages", { min: data.admissionAge.min, max: data.admissionAge.max })}</span>
+                  <span>{t("school.ages", { min: school.ageLow, max: school.ageHigh })}</span>
                 </div>
 
-                {data.phone && (
+                {school.phone && (
                   <div className="flex items-center space-x-2">
                     <Phone className="h-5 w-5" />
-                    <span>{data.phone}</span>
+                    <span>{school.phone}</span>
                   </div>
                 )}
 
-                {data.email && (
+                {school.email && (
                   <div className="flex items-center space-x-2">
                     <Mail className="h-5 w-5" />
-                    <span>{data.email}</span>
+                    <span>{school.email}</span>
                   </div>
                 )}
 
-                {data.website && (
+                {school.website && (
                   <div className="flex items-center space-x-2">
                     <Globe className="h-5 w-5" />
-                    <a href={data.website} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                    <a href={school.website} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
                       {t("school.details")}
                     </a>
                   </div>
@@ -112,15 +117,15 @@ export default function SchoolProfile() {
                 <CardTitle>{t("school.examResults")}</CardTitle>
               </CardHeader>
               <CardContent>
-                {data.examResults ? (
+                {school.examResults ? (
                   <div className="space-y-4">
                     <div>
                       <div className="text-sm text-gray-500">GCSE Pass Rate</div>
-                      <div className="text-2xl font-bold">{data.examResults.gcse.passRate}%</div>
+                      <div className="text-2xl font-bold">{school.examResults.gcse.passRate}%</div>
                     </div>
                     <div>
                       <div className="text-sm text-gray-500">A-Level Pass Rate</div>
-                      <div className="text-2xl font-bold">{data.examResults.aLevel.passRate}%</div>
+                      <div className="text-2xl font-bold">{school.examResults.aLevel.passRate}%</div>
                     </div>
                   </div>
                 ) : (
@@ -135,7 +140,7 @@ export default function SchoolProfile() {
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">
-                  {data.facilities.map((facility) => (
+                  {school.facilities.map((facility) => (
                     <Badge key={facility} variant="outline">
                       {facility}
                     </Badge>
@@ -146,12 +151,12 @@ export default function SchoolProfile() {
           </div>
         </div>
 
-        <Card className="mt-8">
+        {/*<Card className="mt-8">
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
               <CardTitle>{t("reviews.title")}</CardTitle>
               <CardDescription>
-                {data.reviews.length} {t("reviews.title").toLowerCase()}
+                {school.reviews.length} {t("reviews.title").toLowerCase()}
               </CardDescription>
             </div>
             <Dialog>
@@ -165,14 +170,14 @@ export default function SchoolProfile() {
                     Share your experience to help other parents make informed decisions
                   </DialogDescription>
                 </DialogHeader>
-                <ReviewForm schoolId={data.id} />
+                <ReviewForm schoolId={school.id} />
               </DialogContent>
             </Dialog>
           </CardHeader>
           <CardContent>
-            {data.reviews.length > 0 ? (
+            {school.reviews.length > 0 ? (
               <div className="space-y-4">
-                {data.reviews.map((review) => (
+                {school.reviews.map((review) => (
                   <div key={review.id} className="border-b pb-4">
                     <div className="flex items-center justify-between">
                       <div className="font-semibold">
@@ -204,7 +209,7 @@ export default function SchoolProfile() {
               <p className="text-gray-500">{t("reviews.noReviews")}</p>
             )}
           </CardContent>
-        </Card>
+        </Card>*/}
       </div>
     </div>
   );

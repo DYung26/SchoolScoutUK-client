@@ -1,6 +1,7 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import { SchoolType, schoolTypeObject } from './types';
 
 const resources = {
   en: {
@@ -9,12 +10,13 @@ const resources = {
         search: 'Search',
         compare: 'Compare',
         match: 'Find Best Match',
-        title: 'UK Schools Guide'
+        title: 'SchoolScoutUK' // 'UK Schools Guide'
       },
       compare: {
         title: 'Compare Schools',
         description: 'Compare up to three schools side by side to make an informed decision',
-        selectSchool: 'Select a school to compare',
+        selectSchools: 'Select a school to compare',
+	selected: 'selected',
         maxSchools: 'You can compare up to 3 schools',
         selectToCompare: 'Select schools to start comparing',
         criteria: 'Criteria',
@@ -54,9 +56,10 @@ const resources = {
         anyType: 'Any Type'
       },
       schoolTypes: {
-        public: 'Public',
+        ...schoolTypeObject,
+        /*public: 'Public',
         private: 'Private',
-        grammar: 'Grammar'
+        grammar: 'Grammar'*/
       },
       school: {
         details: 'View Details',

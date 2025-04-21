@@ -18,8 +18,8 @@ export function NavBar() {
   const [location, setLocation] = useLocation();
 
   const isActive = (path: string) => {
-    if (path === "/") {
-      return location === "/";
+    if (path) { // === "/dashboard") {
+      return location === path; // "/dashboard";
     }
     return location.startsWith(path);
   };
@@ -70,13 +70,13 @@ export function NavBar() {
             </Sheet>
 
             <div 
-              onClick={() => handleNavigate("/")}
+              onClick={() => handleNavigate("/dashboard")}
               className="flex items-center px-2 text-navy-900 cursor-pointer"
             >
               <School className="h-8 w-8 text-primary"/>
               <span className={cn(
                 "ml-2 text-xl font-semibold",
-                isActive("/") && "text-primary"
+                isActive("/dashboard") && "text-primary"
               )}>
                 {t('nav.title')}
               </span>

@@ -26,7 +26,7 @@ export function Breadcrumb({ className }: BreadcrumbProps) {
       )}
       aria-label="Breadcrumb"
     >
-      <Link href="/">
+      <Link href="/dashboard">
         <a className="flex items-center hover:text-foreground">
           <Home className="h-4 w-4" />
           <span className="sr-only">{t('breadcrumb.home')}</span>

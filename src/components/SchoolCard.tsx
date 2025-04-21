@@ -8,15 +8,19 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import type { School as SchoolType } from "@/lib/types";
+import { SchoolTypeEnum, type School as SchoolType } from "@/lib/types";
 import { Link, useLocation } from "wouter";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { formatCurrency, formatPercentage } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import { useToast } from "@/hooks/use-toast";
+import { ProgressCircle } from "./ProgressCircle";
 
 interface Props {
-  school: SchoolType;
+  school: SchoolType & {
+    score?: number,
+    aiComment?: string
+  };
   showActions?: boolean;
 }
 
@@ -64,13 +68,19 @@ export function SchoolCard({ school, showActions = true }: Props) {
             <CardTitle className="text-xl">{school.name}</CardTitle>
             <CardDescription className="flex items-center mt-1">
               <MapPin className="h-4 w-4 mr-1" />
-              {school.city}
+              {school.town}
             </CardDescription>
           </div>
-          <Badge variant={school.type === 'private' ? 'default' : 'secondary'
+          <Badge variant={school.type === SchoolTypeEnum.COMMUNITY ? 'default' : 'secondary'
           }>
             {t(`schoolTypes.${school.type}`)}
           </Badge>
+          {school.score && (
+            <div className="flex items-center justify-between">
+              <ProgressCircle value={school.score * 100} />
+              <small>{Math.round(school.score * 100)}% Match</small>
+            </div>
+          )}
         </div>
       </CardHeader>
       <CardContent>
@@ -78,10 +88,15 @@ export function SchoolCard({ school, showActions = true }: Props) {
           <div className="flex items-center space-x-2">
             <GraduationCap className="h-4 w-4" />
             <span>
-              {t('school.ages', )}
-              (min: school.ageLow, max: school.ageHigh)
+              {t('school.ages', { min: school.ageLow, max: school.ageHigh })}
             </span>
           </div>
+
+          {school.aiComment && (
+            <blockquote className="text-sm italic text-blue-700 mt-2 border-l-4 pl-2 border-blue-400">
+              {school.aiComment}
+            </blockquote>
+          )}
 
           {school.examResults && (
             <div className="grid grid-cols-2 gap-2 text-sm">
@@ -102,9 +117,9 @@ export function SchoolCard({ school, showActions = true }: Props) {
             </div>
           )}
 
-          {showActions && (
+          {showActions && school.schoolId && (
             <div className="flex space-x-2 mt-4">
-              <Link href={`/schools/${school.id}`}>
+              <Link to={`/schools/${school.schoolId}`}>
                 <div className="flex-1 cursor-pointer">
                   <Button className="w-full">
                     {t('school.details')}

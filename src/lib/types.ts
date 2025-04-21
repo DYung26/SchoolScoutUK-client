@@ -11,13 +11,47 @@ export interface User {
   updatedAt: number;
 }
 
-export type SchoolType = 'public' | 'private' | 'grammar';
+export enum SchoolTypeEnum {
+  FOUNDATION_SPECIAL = 'Foundation special school',
+  OTHER_INDEPENDENT_SPECIAL = 'Other independent special school',
+  VOLUNTARY_CONTROLLED = 'Voluntary controlled school',
+  CITY_TECH_COLLEGE = 'City technology college',
+  ACADEMY_SPONSOR_LED = 'Academy sponsor led',
+  FURTHER_EDUCATION = 'Further education',
+  FREE_SCHOOL = 'Free schools',
+  FREE_SCHOOL_16_TO_19 = 'Free schools 16 to 19',
+  UNIVERSITY_TECH_COLLEGE = 'University technical college',
+  NON_MAINTAINED_SPECIAL = 'Non-maintained special school',
+  ACADEMY_CONVERTER = 'Academy converter',
+  FOUNDATION = 'Foundation school',
+  SERVICE_CHILDREN_EDUCATION = "Service childrens education",
+  COMMUNITY = 'Community school',
+  ACADEMY_16_TO_19_CONVERTER = 'Academy 16-19 converter',
+  ACADEMY_SPECIAL_CONVERTER = 'Academy special converter',
+  SIXTH_FORM_CENTRE = 'Sixth form centres',
+  STUDIO_SCHOOL = 'Studio schools',
+  FREE_SCHOOL_SPECIAL = 'Free schools special',
+  COMMUNITY_SPECIAL = 'Community special school',
+  OTHER_INDEPENDENT = 'Other independent school',
+  ACADEMY_SPECIAL_SPONSOR_LED = 'Academy special sponsor led',
+  VOLUNTARY_AIDED = 'Voluntary aided school',
+  ACADEMY_16_TO_19_SPONSOR_LED = 'Academy 16 to 19 sponsor led'
+}
+//'public' | 'private' | 'grammar';
+export const SchoolType = Object.values(SchoolTypeEnum) as [SchoolTypeEnum, ...SchoolTypeEnum[]];
+
+export const schoolTypeObject = Object.values(SchoolTypeEnum).reduce((acc, value) => {
+  acc[value] = value;
+  return acc;
+}, {} as Record<string, string>);
 
 export interface School {
   id: number;
+  schoolId: string;
   name: string;
   address: string;
   city: string;
+  town: string;
   postcode: string;
   type: string; // SchoolType;
   ageLow: string;
@@ -63,7 +97,7 @@ export interface Review {
 
 export interface SearchFilters {
   search?: string;
-  type?: SchoolType;
+  type?: SchoolTypeEnum;
   city?: string;
   minRating?: number;
 }
