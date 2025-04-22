@@ -28,13 +28,13 @@ export function SearchFilters({ onFilter }: Props) {
     <div className="bg-white p-4 rounded-lg shadow space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
           <Input
-            placeholder="Search schools..."
+            placeholder="Search by keyword..."
             value={filters.search || ""}
             onChange={(e) => setFilters({ ...filters, search: e.target.value })}
-            className="pl-10"
+            className="px-10 pl-10"
           />
-          <Search className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
         </div>
 
         <Select
