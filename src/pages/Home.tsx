@@ -4,11 +4,17 @@ import { useQuery } from "@tanstack/react-query";
 import type { School, SearchFilters as Filters } from "@/lib/types";
 import { School as SchoolIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useSearchParams } from "wouter";
 
 export default function Home() {
   const { t } = useTranslation();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const queryString = searchParams.toString();
+  const endpoint = `/api/schools${queryString ? `?${queryString}` : ""}`;
+
   const { data, isLoading } = useQuery<{ data: { schools: School[] } }>({
-    queryKey: ["/api/schools"],
+    queryKey: [endpoint],
   });
   const schools = data?.data?.schools;
   console.log("$$$$", schools);
@@ -18,10 +24,12 @@ export default function Home() {
     const params = new URLSearchParams();
     Object.entries(filters).forEach(([key, value]) => {
       if (value) params.append(key, value.toString());
+      else params.delete(key);
     });
 
     // Re-fetch with new filters
-    window.location.search = params.toString();
+    // window.location.search = params.toString();
+    setSearchParams(params);
   };
 
   return (

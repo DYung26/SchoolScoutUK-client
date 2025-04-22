@@ -15,7 +15,7 @@ export function ProtectedRoute(
 
   if (loading) return <LoadingSpinner />;
 
-  if (!user) return <Redirect to="/login" />;
+  if (!user) return; // <Redirect to="/login" />;
 
   if (role === "admin" && !user.isAdmin) {
     return <Redirect to="/not-found" />;

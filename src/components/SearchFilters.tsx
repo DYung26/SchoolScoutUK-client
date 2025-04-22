@@ -9,13 +9,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { SearchFilters } from "@/lib/types";
+import { SchoolType, type SearchFilters } from "@/lib/types";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   onFilter: (filters: SearchFilters) => void;
 }
 
 export function SearchFilters({ onFilter }: Props) {
+  const { t } = useTranslation();
   const [filters, setFilters] = useState<SearchFilters>({});
 
   const handleFilter = () => {
@@ -43,9 +45,11 @@ export function SearchFilters({ onFilter }: Props) {
             <SelectValue placeholder="School Type" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="public">Public</SelectItem>
-            <SelectItem value="private">Private</SelectItem>
-            <SelectItem value="grammar">Grammar</SelectItem>
+            {SchoolType.map((type) => (
+              <SelectItem key={type} value={type}>
+                {t(`schoolTypes.${type}`)}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
 

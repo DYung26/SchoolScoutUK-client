@@ -34,11 +34,14 @@ axiosInstance.interceptors.response.use(
       }
 
       try {
-        const { data } = await axios.post("/api/auth/refresh-token", { refreshToken });
-        localStorage.setItem("accessToken", data.accessToken);
-        originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
+        const { data } = await axios.post(`${apiBaseUrl}/api/auth/refresh-token`, { data: { refreshToken } });
+	console.log(data);
+	console.log(data?.data?.accessToken);
+        localStorage.setItem("accessToken", data?.data?.accessToken);
+        originalRequest.headers.Authorization = `Bearer ${data?.data?.accessToken}`;
         return axiosInstance(originalRequest);
       } catch (refreshError) {
+        alert("hold on");
         console.error("Token refresh failed:", refreshError);
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
