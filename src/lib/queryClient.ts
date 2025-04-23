@@ -35,7 +35,7 @@ export async function mutationFn({
       data: body,
     });
 
-    return data; // .json();
+    return data;
   } catch (error: any) {
     if (error.response) {
       throw new Error(`${error.response.status}: ${error.response.data.message || error.response.data}`);
