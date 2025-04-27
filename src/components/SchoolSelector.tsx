@@ -55,15 +55,15 @@ export function SchoolSelector({
                       <div>
                         <h3 className="font-medium mb-1">{school.name}</h3>
                         <p className="text-sm text-muted-foreground">
-                          {school.city}
+                          {school.town}
                         </p>
                         <div className="mt-2 text-sm">
                           <p>{t(`schoolTypes.${school.type}`)}</p>
                           {school.admissionAge && (
                             <p className="text-muted-foreground">
                               {t('school.ages', {
-                                min: school.admissionAge.min,
-                                max: school.admissionAge.max
+                                min: school.ageLow,
+                                max: school.ageHigh
                               })}
                             </p>
                           )}

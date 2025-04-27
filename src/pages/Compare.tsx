@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { SchoolSelector } from "@/components/SchoolSelector";
 import type { School } from "@/lib/types";
+import { SchoolCard } from "@/components/SchoolCard";
 
 export default function Compare() {
   const [location, setLocation] = useLocation();
@@ -90,19 +91,31 @@ export default function Compare() {
           </CardContent>
         </Card>
 
-        {selectedSchools.length > 0 && (
-          <Card>
-            <CardHeader>
-              <CardTitle>{t('compare.comparisonResults')}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              {/* Comparison results will be added in the next iteration */}
-              <div className="text-center py-8 text-muted-foreground">
-                {t('compare.selectingSchools')}
-              </div>
-            </CardContent>
-          </Card>
-        )}
+        {selectedSchools.length > 0 && (() => {
+          const fullSchoolObjects = schools.filter(s => selectedSchools.includes(s.id));
+          return(
+            <Card>
+              <CardHeader>
+                <CardTitle>{t('compare.comparisonResults')}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                {/* Comparison results will be added in the next iteration */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {fullSchoolObjects.map((school) => (
+                    <SchoolCard
+                      key={school.id}
+                      school={{ ...school }}
+                      showActions={false}
+                    />
+                  ))}
+                </div>
+                <div className="text-center py-8 text-muted-foreground">
+                  {t('compare.selectingSchools')}
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })()}
       </div>
     </div>
   );

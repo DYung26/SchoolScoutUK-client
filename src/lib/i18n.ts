@@ -29,7 +29,9 @@ const resources = {
         facilitiesChart: 'Facilities Comparison',
         demographicsChart: 'Student Demographics',
         feeBreakdown: 'Fee Breakdown',
-        photoGallery: 'School Photos'
+        photoGallery: 'School Photos',
+        comparisonResults: 'Comparison Results',
+        selectingSchools: ''
       },
       home: {
         title: 'Find the Perfect School',
