@@ -26,14 +26,9 @@ export default function VerifyEmail() {
   useEffect(() => {
     const queryString = new URLSearchParams(window.location.search);
     const token = queryString.get('token');
-    // const params = new URLSearchParams(location); //.split('?')[1]);
-    // const tokenParam = params.get('token');
-    // alert(params);
     if (token) {
       setToken(token);
-      // alert(token);
-      const response = verifyMutation.mutate( { token });
-      // alert(response);
+      verifyMutation.mutate( { token });
     }
   }, [location]);
 
@@ -44,7 +39,6 @@ export default function VerifyEmail() {
         {/*<p className="mt-2 text-sm text-gray-600">
           {token ? `Verifying token:` : "No token provided."}
         </p>*/}
-        {/* You can now call your verify endpoint using the token */}
         {verifyMutation.isPending && <p className="text-blue-500">Verifying...</p>}
         {verifyMutation.isSuccess &&
           <p className="text-green-600">

@@ -19,7 +19,6 @@ import {
   Award,
   Star
 } from "lucide-react";
-import type { School, Review } from "@/lib/types";
 import { ReviewForm } from "@/components/ReviewForm";
 import {
   Dialog,
@@ -30,6 +29,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useTranslation } from "react-i18next";
+import { School } from "@/lib/interfaces";
 
 export default function SchoolProfile() {
   const { t } = useTranslation();
