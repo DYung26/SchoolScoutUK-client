@@ -1,11 +1,60 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import { SchoolType, schoolTypeObject } from './types';
+import { academicPerformanceObject, budgetObject, careerInterestsObject, commuteWillingnessObject, extracurricularsObject, favouriteSubjectsObject, hobbiesObject, learningNeedsObject, locationPreferenceObject, religiousAffiliationObject, schoolTypeObject, userGenderObject } from './constants';
 
 const resources = {
   en: {
     translation: {
+      user: {
+        age: "Student Age",
+        gender: "Gender",
+        academicPerformance: "Academic Performance",
+        favouriteSubjects: "Favourite Subjects",
+        hobbies: "Hobbies",
+        extracurriculars: "Extracurriculars",
+        careerInterests: "Career Interests",
+        schoolTypes: "School Types",
+        learningNeeds: "Learning Needs",
+        locationPreference: "Location Preference",
+        commuteWillingness: "Commute Willingness",
+        budget: "Budget",
+        religiousAffiliation: "Religious Affiliation",
+      },
+      userGender: {
+        prefer_not_say: "prefer_not_say",
+        ...userGenderObject,
+      },
+      academicPerformance: {
+        ...academicPerformanceObject,
+      },
+      favouriteSubjects: {
+        ...favouriteSubjectsObject,
+      },
+      hobbies: {
+        ...hobbiesObject,
+      },
+      extracurriculars: {
+        ...extracurricularsObject,
+      },
+      careerInterests: {
+        ...careerInterestsObject,
+      },
+      learningNeeds: {
+        ...learningNeedsObject,
+      },
+      locationPreference: {
+        ...locationPreferenceObject,
+      },
+      commuteWillingness: {
+        ...commuteWillingnessObject,
+      },
+      budget: {
+        ...budgetObject,
+      },
+      religiousAffiliation: {
+        ...religiousAffiliationObject,
+      },
       nav: {
         search: 'Search',
         compare: 'Compare',

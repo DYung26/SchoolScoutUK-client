@@ -1,4 +1,4 @@
-import { AuthContextType, User } from "@/lib/types";
+import { AuthContextType, UserPreferences, User } from "@/lib/interfaces";
 import { useQuery } from "@tanstack/react-query";
 import { createContext, ReactNode, useEffect, useState } from "react";
 
@@ -8,10 +8,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [accessToken, setAccessToken] = useState<string | null>(() => {
     return localStorage.getItem("accessToken") || null;
   });
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<{ user: User, preferences: UserPreferences } | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const { data, isLoading, error } = useQuery<{ data: { user: User } }>({
+  const { data, isLoading, error } = useQuery<{ data: { user: User, preferences: UserPreferences } }>({
     queryKey: ["/api/users"],
     enabled: !!accessToken,
   });
@@ -22,8 +22,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (error) {
       console.error("Error fetching user:", error);
       logout();
-    } else if (data?.data?.user) {
-      setUser(data?.data?.user);
+    } else if (data?.data) {
+      setUser(data?.data);
     }
     setLoading(false);
   }, [data, isLoading, error]);
