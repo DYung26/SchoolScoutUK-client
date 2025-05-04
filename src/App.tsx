@@ -15,12 +15,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Toaster } from "sonner";
 import ProfileNav from "./components/ProfileNav";
 import Onboarding from "./pages/Onboarding";
+import VerifyEmail from "./pages/VerifyEmail";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Login} />
       <Route path="/signup" component={SignUp} />
+      <Route path="/verify-email" component={VerifyEmail} />
       <Route path="/onboarding" component={Onboarding} />
       <Route path="/login" component={Login} />
       <Layout>

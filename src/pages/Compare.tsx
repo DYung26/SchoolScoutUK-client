@@ -29,7 +29,8 @@ export default function Compare() {
   const schools = data?.data?.schools ?? [];
 
   useEffect(() => {
-    const params = new URLSearchParams(location.split('?')[1]);
+    const params = new URLSearchParams(window.location.search);
+    //location.split('?')[1]);
     const schoolIds = params.get('schools');
     if (schoolIds) {
       setSelectedSchools(schoolIds.split(',').map(Number));
