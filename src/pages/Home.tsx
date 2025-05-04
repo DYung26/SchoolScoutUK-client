@@ -1,10 +1,10 @@
 import { SearchFilters } from "@/components/SearchFilters";
 import { SchoolCard } from "@/components/SchoolCard";
 import { useQuery } from "@tanstack/react-query";
-import type { School, SearchFilters as Filters } from "@/lib/types";
 import { School as SchoolIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "wouter";
+import { School, SearchFilter } from "@/lib/interfaces";
 
 export default function Home() {
   const { t } = useTranslation();
@@ -19,7 +19,7 @@ export default function Home() {
   const schools = data?.data?.schools;
   console.log("$$$$", schools);
 
-  const handleFilter = (filters: Filters) => {
+  const handleFilter = (filters: SearchFilter) => {
     // Construct query string from filters
     const params = new URLSearchParams();
     Object.entries(filters).forEach(([key, value]) => {

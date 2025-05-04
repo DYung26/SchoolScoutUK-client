@@ -4,16 +4,12 @@ import { useEffect, useState } from "react";
 import { School as SchoolIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
+  Card, CardContent, CardHeader, CardTitle, CardDescription,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { SchoolSelector } from "@/components/SchoolSelector";
-import type { School } from "@/lib/types";
 import { SchoolCard } from "@/components/SchoolCard";
+import { School } from "@/lib/interfaces";
 
 export default function Compare() {
   const [location, setLocation] = useLocation();
