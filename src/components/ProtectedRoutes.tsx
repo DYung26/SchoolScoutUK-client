@@ -17,7 +17,7 @@ export function ProtectedRoute(
 
   if (!user) return <Redirect to="/login" />;
 
-  if (role === "admin" && !user.isAdmin) {
+  if (role === "admin" && !user.user.isAdmin) {
     return <Redirect to="/not-found" />;
   }
 

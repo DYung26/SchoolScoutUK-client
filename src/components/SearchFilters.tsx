@@ -3,22 +3,19 @@ import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
-import { SchoolType, type SearchFilters } from "@/lib/types";
 import { useTranslation } from "react-i18next";
+import { SchoolType } from "@/lib/constants";
+import { SearchFilter } from "@/lib/interfaces";
 
 interface Props {
-  onFilter: (filters: SearchFilters) => void;
+  onFilter: (filters: SearchFilter) => void;
 }
 
 export function SearchFilters({ onFilter }: Props) {
   const { t } = useTranslation();
-  const [filters, setFilters] = useState<SearchFilters>({});
+  const [filters, setFilters] = useState<SearchFilter>({});
 
   const handleFilter = () => {
     onFilter(filters);

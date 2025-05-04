@@ -7,19 +7,15 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { SchoolType } from "@/lib/types";
+import { SchoolTypeEnum } from "@/lib/enum";
 
 export interface FilterOptions {
-  type?: SchoolType;
+  type?: SchoolTypeEnum;
   maxDistance?: number;
   maxFees?: number;
   minGcseScore?: number;
@@ -47,7 +43,7 @@ export function FilterPanel({ onFilter }: Props) {
           <div>
             <Select
               value={filters.type}
-              onValueChange={(value: SchoolType) => 
+              onValueChange={(value: SchoolTypeEnum) => 
                 setFilters(prev => ({ ...prev, type: value }))
               }
             >

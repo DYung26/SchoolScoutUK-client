@@ -8,16 +8,17 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { SchoolTypeEnum, type School as SchoolType } from "@/lib/types";
 import { Link, useLocation } from "wouter";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { formatCurrency, formatPercentage } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import { useToast } from "@/hooks/use-toast";
 import { ProgressCircle } from "./ProgressCircle";
+import { type School as SchoolInterface } from "@/lib/interfaces";
+import { SchoolTypeEnum } from "@/lib/enum";
 
 interface Props {
-  school: SchoolType & {
+  school: SchoolInterface & {
     score?: number,
     aiComment?: string
   };
