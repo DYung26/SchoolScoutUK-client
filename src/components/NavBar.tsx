@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { navigate } from "wouter/use-browser-location";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 export function NavBar() {
   const { t } = useTranslation();
@@ -49,14 +51,14 @@ export function NavBar() {
                     <Target className="mr-2 h-4 w-4" />
                     {t('nav.match')}
                   </Button>
-                  <Button 
+                  {/*<Button 
                     onClick={() => handleNavigate("/search")}
                     variant={isActive("/search") ? "secondary" : "ghost"} 
                     className="w-full justify-start"
                   >
                     <Search className="mr-2 h-4 w-4" />
                     {t('nav.search')}
-                  </Button>
+                  </Button>*/}
                   <Button 
                     onClick={() => handleNavigate("/compare")}
                     variant={isActive("/compare") ? "secondary" : "ghost"} 
@@ -128,14 +130,14 @@ export function NavBar() {
                 <span>{t('nav.match')}</span>
               </Button>
 
-              <Button 
+              {/*<Button 
                 onClick={() => handleNavigate("/search")}
                 variant={isActive("/search") ? "secondary" : "ghost"} 
                 className="flex items-center"
               >
                 <Search className="mr-2 h-4 w-4" />
                 <span>{t('nav.search')}</span>
-              </Button>
+              </Button>*/}
 
               <Button 
                 onClick={() => handleNavigate("/compare")}
@@ -148,6 +150,16 @@ export function NavBar() {
             </div>
 
             <LanguageSelector />
+            <Button
+              variant="ghost"
+              className="p-0 hover:bg-transparent"
+              onClick={() => navigate("/profile")}
+            >
+              <Avatar className="w-9 h-9">
+              <AvatarImage src="https://via.placeholder.com/150/0000FF/808080?text=Profile" />
+              <AvatarFallback>DY</AvatarFallback>
+              </Avatar>
+            </Button>
           </div>
         </div>
       </div>

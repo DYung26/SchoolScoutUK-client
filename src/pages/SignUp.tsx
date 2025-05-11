@@ -75,110 +75,117 @@ export default function SignUp() {
             <h2 className="text-center text-4xl font-black">Sign Up</h2>
             <h2 className="text-center text-2xl font-thin">Set up your account in minutes</h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <form onSubmit={handleRegister}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="firstName" className="w-full text-blue-700">first name
+                  <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="firstName"
+                    placeholder="first name"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    className="w-full p-2 border rounded focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="lastName" className="w-full text-blue-700">last name
+                  <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="lastName"
+                    placeholder="last name"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                    className="w-full p-2 border rounded focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+
               <div>
-                <label htmlFor="firstName" className="w-full text-blue-700">first name
+                <label htmlFor="username" className="w-full text-blue-700">username
                 <span className="text-red-500">*</span>
                 </label>
                 <input
-                  type="text"
-                  name="firstName"
-                  placeholder="first name"
-                  value={formData.firstName}
+                  type="username"
+                  name="username"
+                  placeholder="username"
+                  value={formData.username}
                   onChange={handleChange}
                   className="w-full p-2 border rounded focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
               <div>
-                <label htmlFor="lastName" className="w-full text-blue-700">last name
+                <label htmlFor="email" className="w-full text-blue-700">email
                 <span className="text-red-500">*</span>
                 </label>
                 <input
-                  type="text"
-                  name="lastName"
-                  placeholder="last name"
-                  value={formData.lastName}
+                  type="email"
+                  name="email"
+                  placeholder="email"
+                  value={formData.email}
                   onChange={handleChange}
                   className="w-full p-2 border rounded focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-            </div>
 
-            <div>
-              <label htmlFor="username" className="w-full text-blue-700">username
-              <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="username"
-                name="username"
-                placeholder="username"
-                value={formData.username}
-                onChange={handleChange}
-                className="w-full p-2 border rounded focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
+              <div className="relative">
+                <label htmlFor="password" className="w-full text-blue-700">password
+                <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  placeholder="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                />
+                <button
+                  type="button"
+                  className="absolute right-5 top-50 transform translate-y-1/2 text-gray-600"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
 
-            <div>
-              <label htmlFor="email" className="w-full text-blue-700">email
-              <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="email"
-                name="email"
-                placeholder="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full p-2 border rounded focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
+              <div className="relative">
+                <label htmlFor="confirmPassword" className="w-full text-blue-700">confirm password
+                <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  name="confirmPassword"
+                  placeholder="confirm password"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                />
+                <button
+                  type="button"
+                  className="absolute right-5 top-50 transform translate-y-1/2 text-gray-600"
+                  onClick={() => setShowConfirmPassword((prev) => !prev)}
+                >
+                  {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+                {error && <p className="text-red-500 text-base font-medium">{error}</p>}
+              </div>
 
-            <div className="relative">
-              <label htmlFor="password" className="w-full text-blue-700">password
-              <span className="text-red-500">*</span>
-              </label>
-              <input
-                type={showPassword ? "text" : "password"}
-                name="password"
-                placeholder="password"
-                value={formData.password}
-                onChange={handleChange}
-                className="w-full p-2 border rounded focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
-              />
               <button
-                type="button"
-                className="absolute right-5 top-50 transform translate-y-1/2 text-gray-600"
-                onClick={() => setShowPassword((prev) => !prev)}
+                type="submit"
+                disabled={signupMutation.isPending}
+                // onClick={handleRegister}
+                className="w-full mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
               >
-                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                {signupMutation.isPending ? "Signing up..." : "Sign Up"}
               </button>
-            </div>
-
-            <div className="relative">
-              <label htmlFor="confirmPassword" className="w-full text-blue-700">confirm password
-              <span className="text-red-500">*</span>
-              </label>
-              <input
-                type={showConfirmPassword ? "text" : "password"}
-                name="confirmPassword"
-                placeholder="confirm password"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                className="w-full p-2 border rounded focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
-              />
-              <button
-                type="button"
-                className="absolute right-5 top-50 transform translate-y-1/2 text-gray-600"
-                onClick={() => setShowConfirmPassword((prev) => !prev)}
-              >
-                {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-              </button>
-              {error && <p className="text-red-500 text-base font-medium">{error}</p>}
-            </div>
-
-            <button type="submit" disabled={signupMutation.isPending} onClick={handleRegister} className="w-full mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
-              {signupMutation.isPending ? "Signing up..." : "Sign Up"}
-            </button>
+            </form>
             {signupMutation.isPending && <LoadingSpinner />}
             <p className="mt-2">
               Already have an account?{" "}

@@ -15,6 +15,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     queryKey: ["/api/users"],
     enabled: !!accessToken,
   });
+  console.log("£££", data);
   console.log("*****", data?.data);
 
   useEffect(() => {
@@ -23,6 +24,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       console.error("Error fetching user:", error);
       logout();
     } else if (data?.data) {
+      console.log("@@@", data?.data);
       setUser(data?.data);
     }
     setLoading(false);
