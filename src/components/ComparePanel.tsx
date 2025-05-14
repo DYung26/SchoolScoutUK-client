@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { School, BarChart2 as CompareIcon, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -21,14 +21,24 @@ interface School {
 export function ComparePanel() {
   const { t } = useTranslation();
   const [selectedSchools, setSelectedSchools] = useState<School[]>([]);
+  const bottomRef = useRef<HTMLDivElement | null>(null);
 
   const { data: schools = [], isLoading } = useQuery<School[]>({
     queryKey: ["/api/schools"],
   });
 
   const addSchool = (school: School) => {
+    alert("here?")
     if (selectedSchools.length < 3 && !selectedSchools.find(s => s.id === school.id)) {
+      alert("ook")
+      const newSelection = [...selectedSchools, school];
       setSelectedSchools([...selectedSchools, school]);
+      if (newSelection.length === 3) {
+        alert("aiit")
+        setTimeout(() => {
+          bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+        },); // short delay ensures DOM has updated
+      }
     }
   };
 
@@ -59,7 +69,7 @@ export function ComparePanel() {
                       {school.address}
                     </p>
                   </div>
-                  <Button
+                  {/*<Button
                     variant="outline"
                     size="sm"
                     onClick={() => addSchool(school)}
@@ -67,7 +77,7 @@ export function ComparePanel() {
                   >
                     <CompareIcon className="mr-2 h-4 w-4" />
                     {t('compare.add')}
-                  </Button>
+                  </Button>*/}
                 </div>
               ))}
             </div>

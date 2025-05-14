@@ -16,6 +16,7 @@ import { Toaster } from "sonner";
 import ProfileNav from "./components/ProfileNav";
 import Onboarding from "./pages/Onboarding";
 import VerifyEmail from "./pages/VerifyEmail";
+import ProfilePage from "./pages/UserProfile";
 
 function Router() {
   return (
@@ -28,7 +29,7 @@ function Router() {
       <Layout>
         <Switch>
           <ProtectedRoute path="/dashboard" component={Home} />
-          <ProtectedRoute path="/profile" component={ProfileNav} />
+          <ProtectedRoute path="/profile" component={ProfilePage} />
           <Route path="/schools/:id" component={SchoolProfile} />
           <ProtectedRoute path="/compare" component={Compare} />
           <Route path="/match" component={Match} />

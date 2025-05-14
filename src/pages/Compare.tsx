@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "wouter";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { School as SchoolIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import {
@@ -15,6 +15,7 @@ export default function Compare() {
   const [location, setLocation] = useLocation();
   const [selectedSchools, setSelectedSchools] = useState<number[]>([]);
   const { t } = useTranslation();
+  const bottomRef = useRef<HTMLDivElement | null>(null);
 
   const { data, isError: isAllSchoolsError } = useQuery<{ data: { schools: School[] } }>({
     queryKey: ["/api/schools"],
@@ -39,6 +40,11 @@ export default function Compare() {
       newSelectedSchools = selectedSchools.filter(id => id !== schoolId);
     } else if (selectedSchools.length < 3) {
       newSelectedSchools = [...selectedSchools, schoolId];
+      if (newSelectedSchools.length === 3) {
+        setTimeout(() => {
+          bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+        }, 100); // short delay ensures DOM has updated
+      }
     } else {
       return; // Already at max schools
     }
@@ -113,6 +119,7 @@ export default function Compare() {
             </Card>
           );
         })()}
+        <div ref={bottomRef} />
       </div>
     </div>
   );

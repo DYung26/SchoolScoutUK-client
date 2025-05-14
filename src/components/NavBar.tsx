@@ -14,10 +14,12 @@ import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { navigate } from "wouter/use-browser-location";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { useAuth } from "@/hooks/use-auth";
 
 export function NavBar() {
   const { t } = useTranslation();
   const [location, setLocation] = useLocation();
+  const { user, loading } = useAuth();
 
   const isActive = (path: string) => {
     if (path) { // === "/dashboard") {
@@ -156,8 +158,10 @@ export function NavBar() {
               onClick={() => navigate("/profile")}
             >
               <Avatar className="w-9 h-9">
-              <AvatarImage src="https://via.placeholder.com/150/0000FF/808080?text=Profile" />
-              <AvatarFallback>DY</AvatarFallback>
+              {/*<AvatarImage src="https://via.placeholder.com/150/0000FF/808080?text=Profile" />*/}
+              <AvatarFallback>
+                {user?.user.firstName[0]}{user?.user.lastName[0]}
+              </AvatarFallback>
               </Avatar>
             </Button>
           </div>
