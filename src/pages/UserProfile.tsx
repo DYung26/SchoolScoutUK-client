@@ -5,9 +5,15 @@ import { Button } from "@/components/ui/button";
 import { Sidebar } from "@/components/Sidebar";
 import { UserCircle } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
+import { navigate } from "wouter/use-browser-location";
 
 export default function ProfilePage() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+
+  function handleLogout() {
+    logout();
+    navigate("/login") 
+  }
 
   return (
     <div className="flex min-h-screen bg-gray-100">
@@ -62,6 +68,15 @@ export default function ProfilePage() {
                     <p className="font-medium">Lagos, Nigeria</p>
                   </div>*/}
                 </div>
+                <div>
+                  <button
+                    className="bg-red-500 border px-4 py-2 rounded-lg text-gray-100
+                      hover:bg-red-300 hover:text-black"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
@@ -84,9 +99,17 @@ export default function ProfilePage() {
                 </div>*/}
                 <div>
                   <p className="text-sm text-gray-500">Email Verification</p>
-                  <p className="font-medium text-green-600">
-                    {user?.user.isVerified ? "Verified" : "Not Verified" }
-                  </p>
+                  {user?.user.isVerified ?
+                    <p className="text-green-600 border inline-block px-4 py-2 
+                      bg-green-600 text-white rounded-lg">
+                      Verified
+                    </p> :
+                    <p className="text-red-600 border inline-block px-4 py-2 
+                      bg-red-600 text-white rounded-lg">
+                      Not Verified
+                    </p> 
+
+                  }
                 </div>
               </CardContent>
             </Card>

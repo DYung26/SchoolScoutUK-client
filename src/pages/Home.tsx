@@ -1,12 +1,15 @@
 import { SearchFilters } from "@/components/SearchFilters";
 import { SchoolCard } from "@/components/SchoolCard";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { School as SchoolIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "wouter";
 import { School, SearchFilter } from "@/lib/interfaces";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
+import { mutationFn } from "@/lib/queryClient";
+import React from "react";
+import { toast } from "@/hooks/use-toastx";
 
 export default function Home() {
   const { t } = useTranslation();
@@ -35,6 +38,32 @@ export default function Home() {
     setSearchParams(params);
   };
 
+  const resendVerificationMutation = useMutation({
+    mutationFn: async () => {
+      return mutationFn({
+        url: "/api/users/resend-verification",
+        method: "POST",
+        body: {},
+      })
+    },
+    onSuccess: () => {
+      console.log();
+    },
+    onError: (error) => {
+      console.error("Mutation Error:", error);
+    }
+  });
+
+  const handleEmailVerification = async () => {
+    try {
+      await resendVerificationMutation.mutateAsync();
+      toast({ title: "Verification Email Sent", description: "Please check your inbox to verify your account." })
+    } catch (err: any) {
+      console.error("Resend Verification Error:", err);
+      toast({ title: "Error Sending Email", description: "There was a problem resending the verification email. Please try again later." });
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       { !user?.user?.isVerified && (
@@ -44,6 +73,7 @@ export default function Home() {
           </div>
           <button
             className="bg-gray-100 text-green-600 hover:bg-green-600 hover:drop-shadow-lg hover:text-white border hover:border-white px-2 py-0.1 m-1 font-medium transition duration-300 ease-in-out"
+            onClick={handleEmailVerification}
           >
             Resend Verification
           </button>

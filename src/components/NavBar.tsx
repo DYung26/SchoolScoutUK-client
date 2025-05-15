@@ -86,7 +86,7 @@ export function NavBar() {
               </span>
             </div>
 
-            <div className="hidden lg:flex lg:ml-6">
+            {/*<div className="hidden lg:flex lg:ml-6">
               <NavigationMenu>
                 <NavigationMenuList>
                   <NavigationMenuItem>
@@ -118,7 +118,7 @@ export function NavBar() {
                   </NavigationMenuItem>
                 </NavigationMenuList>
               </NavigationMenu>
-            </div>
+            </div>*/}
           </div>
 
           <div className="flex items-center space-x-4">
