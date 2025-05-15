@@ -5,10 +5,13 @@ import { School as SchoolIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "wouter";
 import { School, SearchFilter } from "@/lib/interfaces";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/use-auth";
 
 export default function Home() {
   const { t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
+  const { user } = useAuth();
 
   const queryString = searchParams.toString();
   const endpoint = `/api/schools${queryString ? `?${queryString}` : ""}`;
@@ -34,6 +37,18 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      { !user?.user?.isVerified && (
+        <div className="flex items-center bg-green-600 mb-2 pl-4 py-0.1 space-x-4 drop-shadow-lg">
+          <div className="flex-grow text-white text-left">
+            Your account is not verified yet. Please verify your email to access all features and ensure account security.
+          </div>
+          <button
+            className="bg-gray-100 text-green-600 hover:bg-green-600 hover:drop-shadow-lg hover:text-white border hover:border-white px-2 py-0.1 m-1 font-medium transition duration-300 ease-in-out"
+          >
+            Resend Verification
+          </button>
+        </div>
+      )}
       <div className="bg-primary text-white py-12 rounded-xl drop-shadow-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
