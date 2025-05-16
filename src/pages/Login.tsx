@@ -10,6 +10,7 @@ import AuthSideBanner from "@/components/AuthSideBanner";
 import { AuthNavbar } from "@/components/AuthNavbar";
 import { Eye, EyeOff } from "lucide-react";
 import { toast } from "@/hooks/use-toastx";
+import { navigate } from "wouter/use-browser-location";
 
 
 export default function Login() {
@@ -33,7 +34,8 @@ export default function Login() {
     onSuccess: (data) => {
       console.log("Login successful:", data);
       login(data);
-      setLocation("/dashboard");
+      // setLocation("/dashboard");
+      navigate("/dashboard")
     },
     onError: (error) => {
       console.error("Login failed:", error.message);

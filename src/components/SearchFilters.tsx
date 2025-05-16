@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -17,8 +17,16 @@ export function SearchFilters({ onFilter }: Props) {
   const { t } = useTranslation();
   const [filters, setFilters] = useState<SearchFilter>({});
 
+  useEffect(() => {
+    handleFilter();
+  }, [filters]);
+
   const handleFilter = () => {
     onFilter(filters);
+  };
+  const clearFilter = () => {
+    onFilter({});
+    setFilters({});
   };
 
   return (
@@ -35,7 +43,7 @@ export function SearchFilters({ onFilter }: Props) {
         </div>
 
         <Select
-          value={filters.type}
+          value={filters.type || ''}
           onValueChange={(value: any) => setFilters({ ...filters, type: value })}
         >
           <SelectTrigger>
@@ -56,8 +64,8 @@ export function SearchFilters({ onFilter }: Props) {
           onChange={(e) => setFilters({ ...filters, city: e.target.value })}
         />
 
-        <Button onClick={handleFilter} className="w-full">
-          Apply Filters
+        <Button onClick={clearFilter} className="w-full">
+          Clear Filters
         </Button>
       </div>
     </div>
