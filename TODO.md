@@ -2,7 +2,7 @@
 
 ## 🔐 Authentication Features
 - [ ] **Forgot Password**: Implement password reset functionality via email.
-- [ ] **Email Verification (OTP)**: Verify user email using One-Time Password (OTP).
+- [✅] **Email Verification (OTP)**: Verify user email using One-Time Password (OTP).
 - [ ] **Google OAuth 2.0 Authentication**: Enable sign-in with Google for seamless authentication.
 
 ## 🔄 Password Management
