@@ -72,7 +72,7 @@ export function SchoolCard({ school, showActions = true }: Props) {
               {school.town}
             </CardDescription>
           </div>
-          <Badge variant={school.type === SchoolTypeEnum.COMMUNITY ? 'default' : 'secondary'
+          <Badge variant={school.type === SchoolTypeEnum.GRAMMAR_SCHOOLS ? 'default' : 'secondary'
           }>
             {t(`schoolTypes.${school.type}`)}
           </Badge>
