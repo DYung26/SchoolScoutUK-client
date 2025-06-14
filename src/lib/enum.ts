@@ -82,6 +82,12 @@ export enum AdmissionPolicyEnum {
 }
 
 export enum SchoolTypeEnum {
+  INDEPENDENT_SCHOOLS = "Independent Schools",
+  GRAMMAR_SCHOOLS = "Grammar Schools",
+  ACADEMY_SCHOOLS = "Academy Schools",
+}
+
+export enum VerboseSchoolTypeEnum {
   FOUNDATION_SPECIAL = 'Foundation special school',
   OTHER_INDEPENDENT_SPECIAL = 'Other independent special school',
   VOLUNTARY_CONTROLLED = 'Voluntary controlled school',
